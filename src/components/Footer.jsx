@@ -248,6 +248,45 @@ const Footer = () => {
               </motion.a>
             </div>
           </div>
+          
+          {/* Developer Credit */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="mt-6 pt-6 border-t border-gray-800/30 text-center"
+          >
+            <p className="text-xs text-gray-500">
+              Developed by{' '}
+              <motion.a
+                href="https://www.linkedin.com/in/welcometohassanraza/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                className="text-primary-400 hover:text-primary-300 font-semibold transition-colors inline-flex items-center gap-1"
+              >
+                Hassan Raza
+                <motion.svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  animate={{ x: [0, 3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="inline-block"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </motion.svg>
+              </motion.a>
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </footer>
