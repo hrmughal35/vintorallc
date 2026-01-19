@@ -9,7 +9,7 @@ import Contact from './pages/Contact'
 
 function App() {
   return (
-    <Router>
+    <Router basename="/vintorallc">
       <div className="min-h-screen flex flex-col relative bg-white">
         <BackgroundMotion variant="default" />
         <Header />
