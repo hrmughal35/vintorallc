@@ -1,0 +1,16 @@
+{
+  "name": "Vintora LLC",
+  "short_name": "Vintora",
+  "description": "Professional supplier of high-quality disposable products",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#334e68",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}

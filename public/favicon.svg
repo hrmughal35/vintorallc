@@ -1,0 +1,25 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334e68" />
+      <stop offset="100%" stop-color="#486581" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="50" cy="50" r="45" fill="url(#faviconGradient)" />
+  
+  <!-- Letter V - Stylized -->
+  <path
+    d="M30 30 L50 70 L70 30"
+    stroke="white"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  
+  <!-- Decorative Elements -->
+  <circle cx="30" cy="25" r="3" fill="white" />
+  <circle cx="70" cy="25" r="3" fill="white" />
+</svg>
