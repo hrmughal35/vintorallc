@@ -125,20 +125,12 @@ const BackgroundMotion = ({ variant = 'default' }) => {
     )
   }
 
-  // Product icons/emojis representing what Vintora sells - Crockery & Disposable Products
-  const floatingProducts = [
-    { icon: '☕', name: 'Paper Cups', size: 50, duration: 18, delay: 0, x: '5%', y: '10%' },
-    { icon: '🥣', name: 'Paper Bowls', size: 55, duration: 20, delay: 1.2, x: '15%', y: '50%' },
-    { icon: '🍽️', name: 'Paper Plates', size: 60, duration: 22, delay: 2.5, x: '25%', y: '20%' },
-    { icon: '📦', name: 'Containers', size: 52, duration: 19, delay: 0.8, x: '35%', y: '60%' },
-    { icon: '🥤', name: 'PET Cups', size: 48, duration: 17, delay: 1.8, x: '45%', y: '8%' },
-    { icon: '🍴', name: 'Cutlery', size: 45, duration: 21, delay: 3, x: '55%', y: '40%' },
-    { icon: '🍱', name: 'Food Containers', size: 58, duration: 23, delay: 3.5, x: '65%', y: '15%' },
-    { icon: '🍣', name: 'Sushi Trays', size: 54, duration: 20, delay: 1.5, x: '75%', y: '55%' },
-    { icon: '🏷️', name: 'Thermal Labels', size: 47, duration: 18, delay: 1, x: '10%', y: '70%' },
-    { icon: '🧾', name: 'Thermal Rolls', size: 51, duration: 21, delay: 2.2, x: '85%', y: '30%' },
-    { icon: '🧤', name: 'Gloves', size: 49, duration: 19, delay: 2.8, x: '3%', y: '35%' },
-    { icon: '📄', name: 'NCR Paper', size: 46, duration: 22, delay: 4, x: '90%', y: '75%' },
+  // Elegant geometric patterns for mature, professional look
+  const geometricPatterns = [
+    { size: 200, duration: 30, delay: 0, x: '10%', y: '15%', rotation: 0, id: 'pattern-1' },
+    { size: 250, duration: 35, delay: 5, x: '85%', y: '20%', rotation: 45, id: 'pattern-2' },
+    { size: 180, duration: 28, delay: 10, x: '50%', y: '70%', rotation: 90, id: 'pattern-3' },
+    { size: 220, duration: 32, delay: 15, x: '20%', y: '80%', rotation: 135, id: 'pattern-4' },
   ]
 
   // Default variant - balanced motion with AnimatePresence
@@ -256,77 +248,97 @@ const BackgroundMotion = ({ variant = 'default' }) => {
             ))}
           </AnimatePresence>
 
-          {/* Additional floating elements with wave motion */}
+          {/* Elegant geometric mesh patterns */}
           <AnimatePresence>
-            {Array.from({ length: 4 }).map((_, index) => (
+            {geometricPatterns.map((pattern, index) => (
               <motion.div
-                key={`wave-${index}`}
-                initial={{ opacity: 0, scale: 0, y: '100%' }}
+                key={pattern.id}
+                initial={{ opacity: 0, scale: 0.8, rotate: pattern.rotation }}
                 animate={{
-                  opacity: [0.02, 0.04, 0.02],
-                  scale: [1, 1.2, 1],
-                  y: ['100%', '-20%', '100%'],
-                  x: [0, Math.sin(index) * 30, 0],
+                  opacity: [0.03, 0.06, 0.03],
+                  scale: [1, 1.05, 1],
+                  rotate: [pattern.rotation, pattern.rotation + 5, pattern.rotation],
                 }}
                 exit={{ opacity: 0, scale: 0 }}
                 transition={{
-                  opacity: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
-                  scale: { duration: 20 + index * 5, repeat: Infinity, ease: 'easeInOut' },
-                  y: { duration: 15 + index * 3, repeat: Infinity, ease: 'easeInOut', delay: index * 2 },
-                  x: { duration: 12 + index * 2, repeat: Infinity, ease: 'easeInOut', delay: index * 1.5 },
-                  initial: { duration: 1.2, delay: index * 0.3 },
+                  opacity: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay: pattern.delay },
+                  scale: { duration: pattern.duration, repeat: Infinity, ease: 'easeInOut', delay: pattern.delay },
+                  rotate: { duration: pattern.duration * 2, repeat: Infinity, ease: 'easeInOut', delay: pattern.delay },
+                  initial: { duration: 1.5, delay: index * 0.4 },
                 }}
-                className="absolute rounded-full blur-2xl"
+                className="absolute"
                 style={{
-                  width: 80 + index * 20,
-                  height: 80 + index * 20,
-                  left: `${20 + index * 20}%`,
-                  background: 'radial-gradient(circle, rgba(51, 78, 104, 0.08) 0%, transparent 70%)',
+                  width: pattern.size,
+                  height: pattern.size,
+                  left: pattern.x,
+                  top: pattern.y,
+                  background: `
+                    radial-gradient(circle at 30% 30%, rgba(51, 78, 104, 0.08) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 70%, rgba(106, 125, 152, 0.06) 0%, transparent 50%),
+                    linear-gradient(135deg, rgba(51, 78, 104, 0.04) 0%, transparent 100%)
+                  `,
+                  borderRadius: '50%',
+                  filter: 'blur(40px)',
                 }}
               />
             ))}
           </AnimatePresence>
+
+          {/* Subtle grid pattern overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.02 }}
+            transition={{ duration: 2 }}
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(51, 78, 104, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(51, 78, 104, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px',
+              maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 70%)',
+              WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 70%)',
+            }}
+          />
+
+          {/* Elegant flowing lines */}
+          <AnimatePresence>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <motion.svg
+                key={`line-${index}`}
+                initial={{ opacity: 0, pathLength: 0 }}
+                animate={{
+                  opacity: [0.02, 0.04, 0.02],
+                  pathLength: [0, 1, 0],
+                }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  opacity: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay: index * 2 },
+                  pathLength: { duration: 20 + index * 5, repeat: Infinity, ease: 'easeInOut', delay: index * 3 },
+                }}
+                className="absolute"
+                style={{
+                  left: `${20 + index * 30}%`,
+                  top: `${30 + index * 20}%`,
+                  width: '40%',
+                  height: '40%',
+                  zIndex: 1,
+                }}
+                viewBox="0 0 400 400"
+                fill="none"
+              >
+                <motion.path
+                  d={`M ${50 + index * 20} ${100 + index * 30} Q ${150 + index * 30} ${50 + index * 20}, ${250 + index * 20} ${150 + index * 40} T ${350 + index * 10} ${250 + index * 30}`}
+                  stroke="rgba(51, 78, 104, 0.15)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </motion.svg>
+            ))}
+          </AnimatePresence>
         </motion.div>
       )}
-      
-      {/* Floating Product Icons - Rendered last so they appear above other background elements */}
-      {mounted && floatingProducts.map((product, index) => (
-        <motion.div
-          key={`product-${product.name}-${index}`}
-          initial={{ opacity: 0.3, y: 0, scale: 1 }}
-          animate={{
-            opacity: [0.25, 0.4, 0.25],
-            y: [0, -60, 0],
-            x: [0, Math.sin(index) * 30, 0],
-            scale: [1, 1.1, 1],
-            rotate: [0, 10, -10, 0],
-          }}
-          transition={{
-            opacity: { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: product.delay },
-            y: { duration: product.duration, repeat: Infinity, ease: 'easeInOut', delay: product.delay },
-            x: { duration: product.duration + 3, repeat: Infinity, ease: 'easeInOut', delay: product.delay },
-            scale: { duration: product.duration, repeat: Infinity, ease: 'easeInOut', delay: product.delay },
-            rotate: { duration: product.duration * 1.8, repeat: Infinity, ease: 'easeInOut', delay: product.delay },
-          }}
-          className="fixed select-none"
-          style={{
-            fontSize: `${product.size + 15}px`, // Moderate size (65-75px)
-            left: product.x,
-            top: product.y,
-            color: 'rgba(51, 78, 104, 0.4)', // More subtle, semi-transparent
-            filter: 'drop-shadow(0 4px 12px rgba(51, 78, 104, 0.3))',
-            textShadow: '0 0 20px rgba(51, 78, 104, 0.2)',
-            zIndex: 25, // Above main (z-20) and sections (z-10) but below header (z-50), with pointer-events: none
-            willChange: 'transform, opacity',
-            pointerEvents: 'none',
-            userSelect: 'none',
-            mixBlendMode: 'normal',
-          }}
-          title={product.name}
-        >
-          {product.icon}
-        </motion.div>
-      ))}
     </>
   )
 }
