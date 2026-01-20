@@ -26,15 +26,23 @@ function RedirectHandler() {
     // Check if there's a stored redirect path from 404.html
     try {
       const redirectPath = sessionStorage.getItem('redirectPath')
-      if (redirectPath && (location.pathname === '/vintorallc/' || location.pathname === '/vintorallc' || location.pathname === '/')) {
+      if (redirectPath) {
+        // Clean up the stored path
         sessionStorage.removeItem('redirectPath')
-        // Navigate to the stored path
-        navigate(redirectPath, { replace: true })
+        
+        // Only redirect if we're on the root path
+        const currentPath = location.pathname.replace(/\/$/, '') || '/'
+        const basePath = '/vintorallc'
+        
+        if (currentPath === basePath || currentPath === basePath + '/') {
+          // Navigate to the stored path
+          navigate(redirectPath, { replace: true })
+        }
       }
     } catch (e) {
       console.error('Error handling redirect:', e)
     }
-  }, [navigate, location])
+  }, []) // Empty dependency array - only run once on mount
 
   return null
 }
