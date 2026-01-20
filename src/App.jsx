@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { AuthProvider } from './contexts/AuthContext'
 import PublicLayout from './components/PublicLayout'
 import ProtectedRoute from './components/admin/ProtectedRoute'
@@ -16,10 +17,33 @@ import AdminBlog from './pages/admin/Blog'
 import ProductForm from './pages/admin/ProductForm'
 import BlogForm from './pages/admin/BlogForm'
 
+// Component to handle redirect from 404.html
+function RedirectHandler() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    // Check if there's a stored redirect path from 404.html
+    try {
+      const redirectPath = sessionStorage.getItem('redirectPath')
+      if (redirectPath && (location.pathname === '/vintorallc/' || location.pathname === '/vintorallc' || location.pathname === '/')) {
+        sessionStorage.removeItem('redirectPath')
+        // Navigate to the stored path
+        navigate(redirectPath, { replace: true })
+      }
+    } catch (e) {
+      console.error('Error handling redirect:', e)
+    }
+  }, [navigate, location])
+
+  return null
+}
+
 function App() {
   return (
     <AuthProvider>
       <Router basename="/vintorallc">
+        <RedirectHandler />
         <Routes>
           {/* Public Routes */}
           <Route element={<PublicLayout />}>

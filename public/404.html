@@ -6,29 +6,27 @@
     <title>Vintora LLC - Professional Disposable Products Supplier</title>
     <script type="text/javascript">
       // GitHub Pages SPA redirect for React Router
-      // This script handles client-side routing for React Router apps on GitHub Pages
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
       
       (function() {
-        var pathSegmentsToKeep = 1; // Number of path segments to keep (/vintorallc/)
+        var pathSegmentsToKeep = 1; // Keep /vintorallc/
         var l = window.location;
+        var path = l.pathname.split('/');
+        var basePath = path.slice(0, 1 + pathSegmentsToKeep).join('/') + '/';
         
-        // Get the base path
-        var pathParts = l.pathname.split('/');
-        var basePath = pathParts.slice(0, 1 + pathSegmentsToKeep).join('/') + '/';
+        // Get the path after the base (remove base and 404.html)
+        var pathAfterBase = l.pathname.replace(basePath, '').replace(/\/404\.html$/, '') || '/';
         
-        // Get the original path without the base and 404.html
-        var originalPath = l.pathname.replace(basePath, '').replace(/\/404\.html$/, '') || '/';
+        // Store the path in sessionStorage before redirecting
+        try {
+          sessionStorage.setItem('redirectPath', pathAfterBase);
+        } catch(e) {
+          console.error('Error storing redirect path:', e);
+        }
         
-        // Preserve query string and hash
-        var query = l.search;
-        var hash = l.hash;
-        
-        // Update the URL in the address bar
-        var newPath = basePath + (originalPath === '/' ? '' : originalPath) + query + hash;
-        window.history.replaceState(null, null, newPath);
-        
-        // Redirect to index.html
-        window.location.replace(basePath + 'index.html');
+        // Redirect to index.html - React Router will read from sessionStorage
+        window.location.replace(basePath + 'index.html' + l.search + l.hash);
       })();
     </script>
   </head>
