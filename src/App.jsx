@@ -58,80 +58,51 @@ function App() {
   
   try {
     return (
-    <AuthProvider>
-      <Router basename="/vintorallc">
-        <RedirectHandler />
-        <Routes>
-          {/* Public Routes */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogPost />} />
-          </Route>
+      <AuthProvider>
+        <Router basename="/vintorallc">
+          <RedirectHandler />
+          <Routes>
+            {/* Public Routes */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
+            </Route>
 
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin/*" element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <Routes>
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="products" element={<AdminProducts />} />
-                  <Route path="products/new" element={<ProductForm />} />
-                  <Route path="products/edit/:categoryId/:subcategoryId/:productId" element={<ProductForm />} />
-                  <Route path="blog" element={<AdminBlog />} />
-                  <Route path="blog/new" element={<BlogForm />} />
-                  <Route path="blog/edit/:id" element={<BlogForm />} />
-                </Routes>
-              </AdminLayout>
-            </ProtectedRoute>
-          } />
-        </Routes>
-      </Router>
-    </AuthProvider>
-  )
-}
-
-function App() {
-  return (
-    <AuthProvider>
-      <Router basename="/vintorallc">
-        <RedirectHandler />
-        <Routes>
-          {/* Public Routes */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogPost />} />
-          </Route>
-
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin/*" element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <Routes>
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="products" element={<AdminProducts />} />
-                  <Route path="products/new" element={<ProductForm />} />
-                  <Route path="products/edit/:categoryId/:subcategoryId/:productId" element={<ProductForm />} />
-                  <Route path="blog" element={<AdminBlog />} />
-                  <Route path="blog/new" element={<BlogForm />} />
-                  <Route path="blog/edit/:id" element={<BlogForm />} />
-                </Routes>
-              </AdminLayout>
-            </ProtectedRoute>
-          } />
-        </Routes>
-      </Router>
-    </AuthProvider>
-  )
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/*" element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <Routes>
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="products" element={<AdminProducts />} />
+                    <Route path="products/new" element={<ProductForm />} />
+                    <Route path="products/edit/:categoryId/:subcategoryId/:productId" element={<ProductForm />} />
+                    <Route path="blog" element={<AdminBlog />} />
+                    <Route path="blog/new" element={<BlogForm />} />
+                    <Route path="blog/edit/:id" element={<BlogForm />} />
+                  </Routes>
+                </AdminLayout>
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    )
+  } catch (error) {
+    console.error('Error in App component:', error)
+    return (
+      <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+        <h1>Error in App Component</h1>
+        <pre>{error.toString()}</pre>
+        <pre>{error.stack}</pre>
+      </div>
+    )
+  }
 }
 
 export default App
