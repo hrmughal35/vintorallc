@@ -8,11 +8,16 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Check if user is already logged in (from localStorage)
-    const authStatus = localStorage.getItem('admin_authenticated')
-    if (authStatus === 'true') {
-      setIsAuthenticated(true)
+    try {
+      const authStatus = typeof window !== 'undefined' ? localStorage.getItem('admin_authenticated') : null
+      if (authStatus === 'true') {
+        setIsAuthenticated(true)
+      }
+    } catch (error) {
+      console.error('Error accessing localStorage:', error)
+    } finally {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }, [])
 
   const login = async (username, password) => {
@@ -21,7 +26,13 @@ export const AuthProvider = ({ children }) => {
     // For demo purposes, using simple credentials
     if (username === 'admin' && password === 'admin123') {
       setIsAuthenticated(true)
-      localStorage.setItem('admin_authenticated', 'true')
+      try {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('admin_authenticated', 'true')
+        }
+      } catch (error) {
+        console.error('Error saving to localStorage:', error)
+      }
       return { success: true }
     }
     return { success: false, error: 'Invalid credentials' }
@@ -29,7 +40,13 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setIsAuthenticated(false)
-    localStorage.removeItem('admin_authenticated')
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('admin_authenticated')
+      }
+    } catch (error) {
+      console.error('Error removing from localStorage:', error)
+    }
   }
 
   return (
