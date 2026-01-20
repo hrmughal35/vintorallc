@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vintora LLC - Professional Disposable Products Supplier</title>
+    <script>
+      // GitHub Pages SPA redirect for React Router
+      // Redirect all 404s to index.html so React Router can handle routing
+      
+      var pathSegmentsToKeep = 1; // Keep the basename (/vintorallc/)
+      var l = window.location;
+      var path = l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/';
+      
+      // Preserve the original path after basename
+      var originalPath = l.pathname.replace(path, '').replace(/\/404\.html$/, '');
+      var search = l.search;
+      var hash = l.hash;
+      
+      // Build redirect URL to index.html
+      var redirect = path + 'index.html';
+      
+      // Update the URL and redirect
+      window.history.replaceState(null, null, path + originalPath + search + hash);
+      window.location.replace(redirect);
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>Redirecting...</p>
+      <meta http-equiv="refresh" content="0;url=/vintorallc/">
+    </noscript>
+  </body>
+</html>
