@@ -1,23 +1,32 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 import './index.css'
 
 // Error boundary for better debugging
 const rootElement = document.getElementById('root')
+
+console.log('main.jsx: Starting app initialization')
+console.log('main.jsx: Root element:', rootElement)
 
 if (!rootElement) {
   console.error('Root element not found!')
   document.body.innerHTML = '<div style="padding: 20px; font-family: sans-serif;"><h1>Error: Root element not found</h1><p>Please check the HTML structure.</p></div>'
 } else {
   const root = ReactDOM.createRoot(rootElement)
+  console.log('main.jsx: React root created')
 
   try {
+    console.log('main.jsx: Attempting to render app')
     root.render(
       <React.StrictMode>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </React.StrictMode>
     )
+    console.log('main.jsx: App render command sent')
   } catch (error) {
     console.error('Error rendering app:', error)
     root.render(

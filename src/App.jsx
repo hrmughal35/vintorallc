@@ -56,7 +56,8 @@ function RedirectHandler() {
 function App() {
   console.log('App component rendering')
   
-  return (
+  try {
+    return (
     <AuthProvider>
       <Router basename="/vintorallc">
         <RedirectHandler />
