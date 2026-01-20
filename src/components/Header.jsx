@@ -20,12 +20,13 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/about', label: 'About Us' },
-    { path: '/products', label: 'Products' },
-    { path: '/contact', label: 'Contact' },
-  ]
+      const navLinks = [
+        { path: '/', label: 'Home' },
+        { path: '/about', label: 'About Us' },
+        { path: '/products', label: 'Products' },
+        { path: '/blog', label: 'Blog' },
+        { path: '/contact', label: 'Contact' },
+      ]
 
   // Consistent navbar styling across all pages - always white background with dark text
   const navbarBgClass = 'bg-white shadow-md border-b border-gray-200'
