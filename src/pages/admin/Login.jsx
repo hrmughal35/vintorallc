@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import Logo from '../../components/Logo'
 
 const Login = () => {
+  console.log('Login component rendering')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')

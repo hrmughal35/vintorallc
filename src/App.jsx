@@ -23,9 +23,12 @@ function RedirectHandler() {
   const location = useLocation()
 
   useEffect(() => {
+    console.log('RedirectHandler: Current location:', location.pathname)
     // Check if there's a stored redirect path from 404.html
     try {
       const redirectPath = sessionStorage.getItem('redirectPath')
+      console.log('RedirectHandler: Stored redirect path:', redirectPath)
+      
       if (redirectPath) {
         // Clean up the stored path
         sessionStorage.removeItem('redirectPath')
@@ -34,7 +37,10 @@ function RedirectHandler() {
         const currentPath = location.pathname.replace(/\/$/, '') || '/'
         const basePath = '/vintorallc'
         
-        if (currentPath === basePath || currentPath === basePath + '/') {
+        console.log('RedirectHandler: Current path:', currentPath, 'Base path:', basePath)
+        
+        if (currentPath === basePath || currentPath === basePath + '/' || currentPath === '/') {
+          console.log('RedirectHandler: Navigating to:', redirectPath)
           // Navigate to the stored path
           navigate(redirectPath, { replace: true })
         }
@@ -42,9 +48,50 @@ function RedirectHandler() {
     } catch (e) {
       console.error('Error handling redirect:', e)
     }
-  }, []) // Empty dependency array - only run once on mount
+  }, [navigate, location]) // Include dependencies
 
   return null
+}
+
+function App() {
+  console.log('App component rendering')
+  
+  return (
+    <AuthProvider>
+      <Router basename="/vintorallc">
+        <RedirectHandler />
+        <Routes>
+          {/* Public Routes */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+          </Route>
+
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin/*" element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Routes>
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="products" element={<AdminProducts />} />
+                  <Route path="products/new" element={<ProductForm />} />
+                  <Route path="products/edit/:categoryId/:subcategoryId/:productId" element={<ProductForm />} />
+                  <Route path="blog" element={<AdminBlog />} />
+                  <Route path="blog/new" element={<BlogForm />} />
+                  <Route path="blog/edit/:id" element={<BlogForm />} />
+                </Routes>
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  )
 }
 
 function App() {
