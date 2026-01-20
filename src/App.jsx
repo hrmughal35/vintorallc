@@ -24,6 +24,14 @@ function RedirectHandler() {
 
   useEffect(() => {
     console.log('RedirectHandler: Current location:', location.pathname)
+    
+    // If the path is /index.html, redirect to /
+    if (location.pathname === '/index.html') {
+      console.log('RedirectHandler: Redirecting /index.html to /')
+      navigate('/', { replace: true })
+      return
+    }
+    
     // Check if there's a stored redirect path from 404.html
     try {
       const redirectPath = sessionStorage.getItem('redirectPath')
@@ -35,11 +43,10 @@ function RedirectHandler() {
         
         // Only redirect if we're on the root path
         const currentPath = location.pathname.replace(/\/$/, '') || '/'
-        const basePath = '/vintorallc'
         
-        console.log('RedirectHandler: Current path:', currentPath, 'Base path:', basePath)
+        console.log('RedirectHandler: Current path:', currentPath)
         
-        if (currentPath === basePath || currentPath === basePath + '/' || currentPath === '/') {
+        if (currentPath === '/') {
           console.log('RedirectHandler: Navigating to:', redirectPath)
           // Navigate to the stored path
           navigate(redirectPath, { replace: true })
