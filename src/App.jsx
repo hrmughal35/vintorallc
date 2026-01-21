@@ -12,6 +12,9 @@ import Blog from './pages/Blog'
 import BlogPost from './pages/BlogPost'
 import Login from './pages/admin/Login'
 import Dashboard from './pages/admin/Dashboard'
+import Categories from './pages/admin/Categories'
+import CategoryForm from './pages/admin/CategoryForm'
+import SubcategoryForm from './pages/admin/SubcategoryForm'
 import AdminProducts from './pages/admin/Products'
 import AdminBlog from './pages/admin/Blog'
 import ProductForm from './pages/admin/ProductForm'
@@ -86,6 +89,11 @@ function App() {
                 <AdminLayout>
                   <Routes>
                     <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="categories/new" element={<CategoryForm />} />
+                    <Route path="categories/edit/:categoryId" element={<CategoryForm />} />
+                    <Route path="categories/:categoryId/subcategories/new" element={<SubcategoryForm />} />
+                    <Route path="categories/:categoryId/subcategories/edit/:subcategoryId" element={<SubcategoryForm />} />
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="products/new" element={<ProductForm />} />
                     <Route path="products/edit/:categoryId/:subcategoryId/:productId" element={<ProductForm />} />

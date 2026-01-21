@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Package, FileText, Users, TrendingUp, ArrowRight } from 'lucide-react'
+import { Package, FileText, Users, TrendingUp, ArrowRight, FolderTree } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { productHierarchy } from '../../data/products'
 import { blogPosts } from '../../data/blog'
@@ -93,7 +93,14 @@ const Dashboard = () => {
           className="bg-white rounded-xl shadow-lg p-6 border border-gray-100"
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Link
+              to="/admin/categories/new"
+              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all duration-200 flex items-center justify-center gap-3 group"
+            >
+              <FolderTree size={24} className="text-gray-400 group-hover:text-primary-600 transition-colors" />
+              <span className="font-semibold text-gray-700 group-hover:text-primary-700">Add Category</span>
+            </Link>
             <Link
               to="/admin/products/new"
               className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all duration-200 flex items-center justify-center gap-3 group"

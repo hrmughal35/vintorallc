@@ -8,7 +8,8 @@ import {
   LogOut, 
   Menu, 
   X,
-  Home
+  Home,
+  FolderTree
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import Logo from '../Logo'
@@ -26,6 +27,7 @@ const AdminLayout = ({ children }) => {
 
   const navItems = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { path: '/admin/categories', label: 'Categories', icon: FolderTree },
     { path: '/admin/products', label: 'Products', icon: Package },
     { path: '/admin/blog', label: 'Blog', icon: FileText },
   ]
