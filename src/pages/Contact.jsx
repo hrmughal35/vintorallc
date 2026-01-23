@@ -1,7 +1,75 @@
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, MessageCircle, Globe } from 'lucide-react'
+import { Mail, MessageCircle, Globe, CheckCircle, XCircle, Phone } from 'lucide-react'
+import { saveContactSubmission } from '../data/contacts'
+import CountryCodeSelector from '../components/CountryCodeSelector'
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    countryCode: '+86', // Default to China
+    subject: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null) // 'success' or 'error'
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    try {
+      // Validate form
+      if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+        setSubmitStatus('error')
+        setIsSubmitting(false)
+        return
+      }
+
+      // Combine country code and phone number
+      const phoneWithCode = formData.phone ? `${formData.countryCode} ${formData.phone}` : ''
+      
+      // Save to localStorage
+      saveContactSubmission({
+        ...formData,
+        phone: phoneWithCode
+      })
+      
+      // Success
+      setSubmitStatus('success')
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        countryCode: '+86',
+        subject: '',
+        message: ''
+      })
+
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus(null)
+      }, 5000)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -245,18 +313,47 @@ const Contact = () => {
                   <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
                     Send us a <span className="text-primary-700">Message</span>
                   </h2>
-                  <form className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {submitStatus === 'success' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-4 bg-green-50 border-2 border-green-200 rounded-xl flex items-center gap-3"
+                      >
+                        <CheckCircle className="text-green-600" size={24} />
+                        <p className="text-green-800 font-semibold">
+                          Thank you! Your message has been sent successfully. We'll get back to you soon.
+                        </p>
+                      </motion.div>
+                    )}
+
+                    {submitStatus === 'error' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-4 bg-red-50 border-2 border-red-200 rounded-xl flex items-center gap-3"
+                      >
+                        <XCircle className="text-red-600" size={24} />
+                        <p className="text-red-800 font-semibold">
+                          Please fill in all fields before submitting.
+                        </p>
+                      </motion.div>
+                    )}
+
                     <div>
                       <label
                         htmlFor="name"
                         className="block text-sm font-bold text-gray-700 mb-2"
                       >
-                        Name
+                        Name *
                       </label>
                       <input
                         type="text"
                         id="name"
                         name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-700 focus:border-primary-700 transition-all bg-white text-gray-900"
                         placeholder="Your name"
                       />
@@ -266,27 +363,57 @@ const Contact = () => {
                         htmlFor="email"
                         className="block text-sm font-bold text-gray-700 mb-2"
                       >
-                        Email
+                        Email *
                       </label>
                       <input
                         type="email"
                         id="email"
                         name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-700 focus:border-primary-700 transition-all bg-white text-gray-900"
                         placeholder="your.email@example.com"
                       />
                     </div>
                     <div>
                       <label
+                        htmlFor="phone"
+                        className="block text-sm font-bold text-gray-700 mb-2"
+                      >
+                        Phone Number
+                      </label>
+                      <div className="flex gap-2">
+                        <CountryCodeSelector
+                          value={formData.countryCode}
+                          onChange={(code) => setFormData(prev => ({ ...prev, countryCode: code }))}
+                          className="w-48"
+                        />
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-700 focus:border-primary-700 transition-all bg-white text-gray-900"
+                          placeholder="Phone number"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label
                         htmlFor="subject"
                         className="block text-sm font-bold text-gray-700 mb-2"
                       >
-                        Subject
+                        Subject *
                       </label>
                       <input
                         type="text"
                         id="subject"
                         name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        required
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-700 focus:border-primary-700 transition-all bg-white text-gray-900"
                         placeholder="Subject"
                       />
@@ -296,23 +423,27 @@ const Contact = () => {
                         htmlFor="message"
                         className="block text-sm font-bold text-gray-700 mb-2"
                       >
-                        Message
+                        Message *
                       </label>
                       <textarea
                         id="message"
                         name="message"
                         rows="6"
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        required
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-700 focus:border-primary-700 transition-all bg-white resize-none"
                         placeholder="Your message..."
                       ></textarea>
                     </div>
                     <motion.button
                       type="submit"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full px-6 py-4 bg-gradient-to-r from-primary-700 to-primary-600 text-white font-bold rounded-xl hover:from-primary-800 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                      whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                      className="w-full px-6 py-4 bg-gradient-to-r from-primary-700 to-primary-600 text-white font-bold rounded-xl hover:from-primary-800 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Send Message
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
                     </motion.button>
                   </form>
                 </div>

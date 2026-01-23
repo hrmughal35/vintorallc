@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
-import { Package, FileText, Users, TrendingUp, ArrowRight, FolderTree } from 'lucide-react'
+import { Package, FileText, Users, TrendingUp, ArrowRight, FolderTree, Mail } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { productHierarchy } from '../../data/products'
 import { blogPosts } from '../../data/blog'
+import { getTotalCount, getUnreadCount } from '../../data/contacts'
 
 const Dashboard = () => {
   // Calculate stats
@@ -15,6 +16,8 @@ const Dashboard = () => {
   const totalCategories = Object.keys(productHierarchy).length
   const totalBlogPosts = blogPosts.length
   const featuredPosts = blogPosts.filter(post => post.featured).length
+  const totalContacts = getTotalCount()
+  const unreadContacts = getUnreadCount()
 
   const stats = [
     {
@@ -39,11 +42,12 @@ const Dashboard = () => {
       link: '/admin/blog',
     },
     {
-      label: 'Featured Posts',
-      value: featuredPosts,
-      icon: TrendingUp,
-      color: 'from-orange-500 to-orange-600',
-      link: '/admin/blog',
+      label: 'Contact Submissions',
+      value: totalContacts,
+      icon: Mail,
+      color: 'from-red-500 to-red-600',
+      link: '/admin/contacts',
+      badge: unreadContacts > 0 ? unreadContacts : null,
     },
   ]
 
@@ -73,8 +77,13 @@ const Dashboard = () => {
             >
               <Link to={stat.link} className="block">
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-lg bg-gradient-to-br ${stat.color} bg-opacity-10`}>
-                    <stat.icon size={24} className={`text-gradient-to-br ${stat.color} bg-clip-text text-transparent`} style={{ color: stat.color.includes('blue') ? '#3b82f6' : stat.color.includes('green') ? '#10b981' : stat.color.includes('purple') ? '#8b5cf6' : '#f97316' }} />
+                  <div className={`p-3 rounded-lg bg-gradient-to-br ${stat.color} bg-opacity-10 relative`}>
+                    <stat.icon size={24} className={`text-gradient-to-br ${stat.color} bg-clip-text text-transparent`} style={{ color: stat.color.includes('blue') ? '#3b82f6' : stat.color.includes('green') ? '#10b981' : stat.color.includes('purple') ? '#8b5cf6' : stat.color.includes('red') ? '#ef4444' : '#f97316' }} />
+                    {stat.badge && (
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                        {stat.badge}
+                      </span>
+                    )}
                   </div>
                   <ArrowRight size={18} className="text-gray-400 group-hover:text-primary-600 transition-colors" />
                 </div>
