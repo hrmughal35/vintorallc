@@ -23,6 +23,7 @@ import AdminBlog from './pages/admin/Blog'
 import ProductForm from './pages/admin/ProductForm'
 import BlogForm from './pages/admin/BlogForm'
 import Contacts from './pages/admin/Contacts'
+import LegalPages from './pages/admin/LegalPages'
 
 // Component to handle redirect from 404.html
 function RedirectHandler() {
@@ -108,6 +109,7 @@ function App() {
                     <Route path="blog/new" element={<BlogForm />} />
                     <Route path="blog/edit/:id" element={<BlogForm />} />
                     <Route path="contacts" element={<Contacts />} />
+                    <Route path="legal" element={<LegalPages />} />
                   </Routes>
                 </AdminLayout>
               </ProtectedRoute>

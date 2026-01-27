@@ -10,7 +10,8 @@ import {
   X,
   Home,
   FolderTree,
-  Mail
+  Mail,
+  Shield
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import Logo from '../Logo'
@@ -32,6 +33,7 @@ const AdminLayout = ({ children }) => {
     { path: '/admin/products', label: 'Products', icon: Package },
     { path: '/admin/blog', label: 'Blog', icon: FileText },
     { path: '/admin/contacts', label: 'Contacts', icon: Mail },
+    { path: '/admin/legal', label: 'Legal Pages', icon: Shield },
   ]
 
   return (
