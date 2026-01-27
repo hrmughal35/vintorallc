@@ -1,28 +1,30 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { AlertCircle, LogIn, Shield, Zap } from 'lucide-react'
+import { Lock, User, AlertCircle, LogIn, Sparkles, Shield, Zap } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import Logo from '../../components/Logo'
 
 const Login = () => {
   console.log('Login component rendering')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     setError('')
     setIsLoading(true)
 
     try {
-      // Use the credentials directly
-      const result = await login('admin@vintorallc.com', 'vintora@llc2026')
+      const result = await login(username, password)
       if (result.success) {
         navigate('/admin/dashboard')
       } else {
-        setError(result.error || 'Login failed. Please try again.')
+        setError(result.error || 'Invalid credentials')
       }
     } catch (err) {
       setError('An error occurred. Please try again.')
@@ -231,47 +233,98 @@ const Login = () => {
               </motion.div>
             )}
 
-            {/* Login Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <motion.button
-                onClick={handleLogin}
-                disabled={isLoading}
-                whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(51, 78, 104, 0.5)' }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+            {/* Login Form */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Username Field */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
               >
-                {/* Animated background gradient */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-primary-500 via-primary-400 to-primary-500"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-                
-                <span className="relative z-10 flex items-center gap-2">
-                  {isLoading ? (
-                    <>
-                      <motion.div
-                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                      />
-                      Signing in...
-                    </>
-                  ) : (
-                    <>
-                      <Zap size={20} className="group-hover:rotate-12 transition-transform" />
-                      Access Admin Panel
-                      <LogIn size={18} />
-                    </>
-                  )}
-                </span>
-              </motion.button>
-            </motion.div>
+                <label htmlFor="username" className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
+                  <User size={16} className="text-primary-400" />
+                  Username
+                </label>
+                <div className="relative group">
+                  <input
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className="w-full px-4 py-3.5 pl-12 bg-[#0f0f0f]/80 border-2 border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all group-hover:border-primary-600/50"
+                    placeholder="Enter your username"
+                  />
+                  <Sparkles className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400/50 group-hover:text-primary-400 transition-colors" size={18} />
+                </div>
+              </motion.div>
+
+              {/* Password Field */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <label htmlFor="password" className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
+                  <Lock size={16} className="text-primary-400" />
+                  Password
+                </label>
+                <div className="relative group">
+                  <input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full px-4 py-3.5 pl-12 bg-[#0f0f0f]/80 border-2 border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all group-hover:border-primary-600/50"
+                    placeholder="Enter your password"
+                  />
+                  <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400/50 group-hover:text-primary-400 transition-colors" size={18} />
+                </div>
+              </motion.div>
+
+              {/* Submit Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+              >
+                <motion.button
+                  type="submit"
+                  disabled={isLoading}
+                  whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(51, 78, 104, 0.5)' }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+                >
+                  {/* Animated background gradient */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary-500 via-primary-400 to-primary-500"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isLoading ? (
+                      <>
+                        <motion.div
+                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                        />
+                        Signing in...
+                      </>
+                    ) : (
+                      <>
+                        <Zap size={20} className="group-hover:rotate-12 transition-transform" />
+                        Sign in
+                        <LogIn size={18} />
+                      </>
+                    )}
+                  </span>
+                </motion.button>
+              </motion.div>
+            </form>
           </div>
         </div>
       </motion.div>
