@@ -272,7 +272,7 @@ const Contact = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Website</h3>
-                      <p className="text-primary-700 font-semibold text-lg">www.vintora.com</p>
+                      <p className="text-primary-700 font-semibold text-lg">www.vintorallc.com</p>
                     </div>
                   </div>
                 </motion.div>

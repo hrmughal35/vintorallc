@@ -196,7 +196,7 @@ const Footer = () => {
                 >
                   <Globe size={22} className="text-primary-400" />
                 </motion.div>
-                <span className="text-sm font-semibold flex-1">www.vintora.com</span>
+                <span className="text-sm font-semibold flex-1">www.vintorallc.com</span>
               </motion.li>
             </ul>
           </motion.div>
