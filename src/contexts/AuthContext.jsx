@@ -23,8 +23,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     // Frontend-only authentication for now
     // In production, this will call the backend API
-    // For demo purposes, using simple credentials
-    if (username === 'admin' && password === 'admin123') {
+    if (username === 'admin@vintorallc.com' && password === 'vintora@llc2026') {
       setIsAuthenticated(true)
       try {
         if (typeof window !== 'undefined') {
