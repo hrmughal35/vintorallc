@@ -70,7 +70,7 @@ function App() {
   try {
     return (
       <AuthProvider>
-        <Router basename="/vintorallc">
+        <Router>
           <RedirectHandler />
           <Routes>
             {/* Public Routes */}
