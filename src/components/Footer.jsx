@@ -230,23 +230,29 @@ const Footer = () => {
               © {currentYear} <span className="text-primary-400 font-bold">Vintora LLC</span>. All rights reserved.
             </motion.p>
             <div className="flex items-center space-x-6 text-sm">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.1, color: '#829ab1' }}
-                className="text-gray-400 hover:text-primary-400 transition-colors font-medium relative group"
+              <motion.div
+                whileHover={{ scale: 1.1 }}
               >
-                Privacy Policy
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-400 group-hover:w-full transition-all duration-300"></span>
-              </motion.a>
+                <Link
+                  to="/privacy-policy"
+                  className="text-gray-400 hover:text-primary-400 transition-colors font-medium relative group"
+                >
+                  Privacy Policy
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-400 group-hover:w-full transition-all duration-300"></span>
+                </Link>
+              </motion.div>
               <span className="text-gray-600">•</span>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.1, color: '#829ab1' }}
-                className="text-gray-400 hover:text-primary-400 transition-colors font-medium relative group"
+              <motion.div
+                whileHover={{ scale: 1.1 }}
               >
-                Terms of Service
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-400 group-hover:w-full transition-all duration-300"></span>
-              </motion.a>
+                <Link
+                  to="/terms-of-service"
+                  className="text-gray-400 hover:text-primary-400 transition-colors font-medium relative group"
+                >
+                  Terms of Service
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-400 group-hover:w-full transition-all duration-300"></span>
+                </Link>
+              </motion.div>
             </div>
           </div>
           
