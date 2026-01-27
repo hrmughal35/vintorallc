@@ -173,12 +173,12 @@ const Footer = () => {
                   <MessageCircle size={22} className="text-green-400" />
                 </motion.div>
                 <a
-                  href="https://wa.me/86"
+                  href="https://wa.me/8619012985053"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm hover:text-primary-400 transition-colors font-semibold flex-1"
                 >
-                  +86 (WhatsApp/WeChat)
+                  +8619012985053 (WhatsApp/WeChat)
                 </a>
               </motion.li>
               <motion.li

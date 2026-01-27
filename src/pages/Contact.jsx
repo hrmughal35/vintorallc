@@ -251,12 +251,12 @@ const Contact = () => {
                         WhatsApp / WeChat
                       </h3>
                       <a
-                        href="https://wa.me/86"
+                        href="https://wa.me/8619012985053"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary-700 hover:text-primary-800 font-semibold transition-colors text-lg"
                       >
-                        +86 (WhatsApp/WeChat)
+                        +8619012985053 (WhatsApp/WeChat)
                       </a>
                     </div>
                   </div>
