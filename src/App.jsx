@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import PublicLayout from './components/PublicLayout'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import AdminLayout from './components/admin/AdminLayout'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Products from './pages/Products'
 import About from './pages/About'
@@ -71,6 +72,7 @@ function App() {
     return (
       <AuthProvider>
         <Router>
+          <ScrollToTop />
           <RedirectHandler />
           <Routes>
             {/* Public Routes */}
