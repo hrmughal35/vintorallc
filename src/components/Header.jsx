@@ -25,7 +25,7 @@ const Header = () => {
         { path: '/about', label: 'About Us' },
         { path: '/products', label: 'Products' },
         { path: '/blog', label: 'Blog' },
-        { path: '/contact', label: 'Contact' },
+        { path: '/contact', label: 'Contact Us' },
       ]
 
   // Consistent navbar styling across all pages - always white background with dark text
