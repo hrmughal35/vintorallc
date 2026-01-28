@@ -55,10 +55,10 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
               ease: "easeInOut"
             }}
           />
-          {/* Optional: Keep text with image logo */}
-          <div className="flex flex-col" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
+          {/* Optional: Keep text with image logo - Single Line */}
+          <div className="flex items-baseline" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
             <motion.span
-              className={`font-bold ${colors.main} ${sizeClasses[size]} flex items-baseline`}
+              className={`font-bold ${colors.main} flex items-baseline`}
               animate={animated ? {
                 opacity: [1, 0.8, 1],
               } : {}}
@@ -68,24 +68,9 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
                 ease: "easeInOut"
               }}
             >
-              <span className={colors.primary} style={{ fontSize: size === 'large' ? '2.5rem' : size === 'small' ? '1.25rem' : '1.75rem' }}>V</span>
-              <span className={colors.primary} style={{ fontSize: size === 'large' ? '2rem' : size === 'small' ? '1rem' : '1.5rem' }}>INTORA</span>
-            </motion.span>
-            <motion.span
-              className={`${colors.secondary} font-semibold -mt-1`}
-              style={{ 
-                fontSize: size === 'large' ? '1rem' : size === 'small' ? '0.625rem' : '0.875rem' 
-              }}
-              animate={animated ? {
-                x: [0, 2, 0],
-              } : {}}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              LLC
+              <span className={colors.primary} style={{ fontSize: size === 'large' ? '2.5rem' : size === 'small' ? '1.25rem' : '1.75rem', lineHeight: '1' }}>V</span>
+              <span className={colors.primary} style={{ fontSize: size === 'large' ? '2rem' : size === 'small' ? '1rem' : '1.5rem', lineHeight: '1' }}>INTORA</span>
+              <span className={colors.secondary} style={{ fontSize: size === 'large' ? '1rem' : size === 'small' ? '0.625rem' : '0.875rem', lineHeight: '1', marginLeft: size === 'large' ? '0.5rem' : size === 'small' ? '0.25rem' : '0.375rem' }}>LLC</span>
             </motion.span>
           </div>
         </div>
@@ -198,10 +183,10 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
           </svg>
         </motion.div>
 
-      {/* Text - Alegreya Sans Font */}
-      <div className="flex flex-col" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
+      {/* Text - Alegreya Sans Font - Single Line */}
+      <div className="flex items-baseline" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
         <motion.span
-          className={`font-bold ${colors.main} ${sizeClasses[size]} flex items-baseline`}
+          className={`font-bold ${colors.main} flex items-baseline`}
           animate={animated ? {
             opacity: [1, 0.8, 1],
           } : {}}
@@ -211,24 +196,9 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
             ease: "easeInOut"
           }}
         >
-          <span className={colors.primary} style={{ fontSize: size === 'large' ? '2.5rem' : size === 'small' ? '1.25rem' : '1.75rem' }}>V</span>
-          <span className={colors.primary} style={{ fontSize: size === 'large' ? '2rem' : size === 'small' ? '1rem' : '1.5rem' }}>INTORA</span>
-        </motion.span>
-        <motion.span
-          className={`${colors.secondary} font-semibold -mt-1`}
-          style={{ 
-            fontSize: size === 'large' ? '1rem' : size === 'small' ? '0.625rem' : '0.875rem' 
-          }}
-          animate={animated ? {
-            x: [0, 2, 0],
-          } : {}}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          LLC
+          <span className={colors.primary} style={{ fontSize: size === 'large' ? '2.5rem' : size === 'small' ? '1.25rem' : '1.75rem', lineHeight: '1' }}>V</span>
+          <span className={colors.primary} style={{ fontSize: size === 'large' ? '2rem' : size === 'small' ? '1rem' : '1.5rem', lineHeight: '1' }}>INTORA</span>
+          <span className={colors.secondary} style={{ fontSize: size === 'large' ? '1rem' : size === 'small' ? '0.625rem' : '0.875rem', lineHeight: '1', marginLeft: size === 'large' ? '0.5rem' : size === 'small' ? '0.25rem' : '0.375rem' }}>LLC</span>
         </motion.span>
       </div>
       </div>
