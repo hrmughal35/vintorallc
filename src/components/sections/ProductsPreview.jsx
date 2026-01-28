@@ -1,10 +1,15 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { getMainCategories } from '../../data/products'
 
 const ProductsPreview = () => {
   const featuredCategories = getMainCategories().slice(0, 6)
+  const navigate = useNavigate()
+
+  const handleCardClick = (categoryId) => {
+    navigate(`/products#${categoryId}`)
+  }
 
   return (
     <section className="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
@@ -39,7 +44,8 @@ const ProductsPreview = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden group"
+              onClick={() => handleCardClick(category.id)}
+              className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden group cursor-pointer"
             >
               {/* Gradient Background on Hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

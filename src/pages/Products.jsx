@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronRight } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 import { productHierarchy, getMainCategories, getSubcategories, getProducts } from '../data/products'
 import ProductModal from '../components/products/ProductModal'
 
@@ -8,6 +9,27 @@ const Products = () => {
   const [expandedCategories, setExpandedCategories] = useState({})
   const [expandedSubcategories, setExpandedSubcategories] = useState({})
   const [selectedProduct, setSelectedProduct] = useState(null)
+  const location = useLocation()
+
+  // Handle hash navigation from home page cards
+  useEffect(() => {
+    if (location.hash) {
+      const categoryId = location.hash.substring(1) // Remove the '#'
+      if (categoryId) {
+        setExpandedCategories(prev => ({
+          ...prev,
+          [categoryId]: true
+        }))
+        // Scroll to the category after a short delay to ensure it's rendered
+        setTimeout(() => {
+          const element = document.getElementById(`category-${categoryId}`)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 300)
+      }
+    }
+  }, [location.hash])
 
   const toggleCategory = (categoryId) => {
     setExpandedCategories(prev => ({
@@ -192,6 +214,7 @@ const Products = () => {
                   return (
                     <motion.div
                       key={category.id}
+                      id={`category-${category.id}`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: categoryIndex * 0.1 }}
