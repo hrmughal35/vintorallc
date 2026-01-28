@@ -56,9 +56,9 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
             }}
           />
           {/* Optional: Keep text with image logo */}
-          <div className="flex flex-col">
+          <div className="flex flex-col" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
             <motion.span
-              className={`font-bold ${colors.main} ${sizeClasses[size]}`}
+              className={`font-bold ${colors.main} ${sizeClasses[size]} flex items-baseline`}
               animate={animated ? {
                 opacity: [1, 0.8, 1],
               } : {}}
@@ -68,10 +68,14 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
                 ease: "easeInOut"
               }}
             >
-              <span className={colors.primary}>VINTORA</span>
+              <span className={colors.primary} style={{ fontSize: size === 'large' ? '2.5rem' : size === 'small' ? '1.25rem' : '1.75rem' }}>V</span>
+              <span className={colors.primary} style={{ fontSize: size === 'large' ? '2rem' : size === 'small' ? '1rem' : '1.5rem' }}>INTORA</span>
             </motion.span>
             <motion.span
-              className={`${colors.secondary} font-semibold ${size === 'large' ? 'text-lg md:text-xl' : size === 'small' ? 'text-xs' : 'text-sm'} -mt-1`}
+              className={`${colors.secondary} font-semibold -mt-1`}
+              style={{ 
+                fontSize: size === 'large' ? '1rem' : size === 'small' ? '0.625rem' : '0.875rem' 
+              }}
               animate={animated ? {
                 x: [0, 2, 0],
               } : {}}
@@ -194,35 +198,39 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
           </svg>
         </motion.div>
 
-        {/* Text */}
-        <div className="flex flex-col">
-          <motion.span
-            className={`font-bold ${colors.main} ${sizeClasses[size]}`}
-            animate={animated ? {
-              opacity: [1, 0.8, 1],
-            } : {}}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <span className={colors.primary}>VINTORA</span>
-          </motion.span>
-          <motion.span
-            className={`${colors.secondary} font-semibold ${size === 'large' ? 'text-lg md:text-xl' : size === 'small' ? 'text-xs' : 'text-sm'} -mt-1`}
-            animate={animated ? {
-              x: [0, 2, 0],
-            } : {}}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            LLC
-          </motion.span>
-        </div>
+      {/* Text - Alegreya Sans Font */}
+      <div className="flex flex-col" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
+        <motion.span
+          className={`font-bold ${colors.main} ${sizeClasses[size]} flex items-baseline`}
+          animate={animated ? {
+            opacity: [1, 0.8, 1],
+          } : {}}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <span className={colors.primary} style={{ fontSize: size === 'large' ? '2.5rem' : size === 'small' ? '1.25rem' : '1.75rem' }}>V</span>
+          <span className={colors.primary} style={{ fontSize: size === 'large' ? '2rem' : size === 'small' ? '1rem' : '1.5rem' }}>INTORA</span>
+        </motion.span>
+        <motion.span
+          className={`${colors.secondary} font-semibold -mt-1`}
+          style={{ 
+            fontSize: size === 'large' ? '1rem' : size === 'small' ? '0.625rem' : '0.875rem' 
+          }}
+          animate={animated ? {
+            x: [0, 2, 0],
+          } : {}}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          LLC
+        </motion.span>
+      </div>
       </div>
     )
   }
