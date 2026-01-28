@@ -141,30 +141,25 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
               </linearGradient>
             </defs>
 
-          {/* Letter V - Using Alegreya Sans Font */}
-          <motion.text
-            x="50"
-            y="65"
-            fontSize={iconSize * 0.65}
-            fontFamily="'Alegreya Sans', sans-serif"
-            fontWeight="900"
-            fill="white"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            className="drop-shadow-lg"
-            initial={{ opacity: 0, scale: 0.8 }}
+          {/* Letter V - Stylized */}
+          <motion.path
+            d="M30 30 L50 70 L70 30"
+            stroke="white"
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+            initial={{ pathLength: 0 }}
             animate={animated ? {
-              opacity: [1, 0.9, 1],
-              scale: [1, 1.05, 1],
-            } : { opacity: 1, scale: 1 }}
+              pathLength: [0, 1, 1],
+            } : { pathLength: 1 }}
             transition={{
-              duration: 2,
+              duration: 1.5,
               repeat: Infinity,
+              repeatDelay: 2,
               ease: "easeInOut"
             }}
-          >
-            V
-          </motion.text>
+          />
             
             {/* Decorative Elements */}
             <motion.circle
