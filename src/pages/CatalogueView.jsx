@@ -74,7 +74,7 @@ const CatalogueView = () => {
         {mainCategories.map((category) => {
           const subcategories = getSubcategories(category.id)
           return (
-            <div key={category.id} className="mb-10 print:break-inside-avoid">
+            <div key={category.id} className="mb-10">
               <h2 className="text-xl font-bold text-primary-800 border-b-2 border-primary-200 pb-2 mb-4">
                 {category.icon} {category.name}
               </h2>
@@ -85,7 +85,7 @@ const CatalogueView = () => {
               {subcategories.map((sub) => {
                 const products = getProducts(category.id, sub.id)
                 return (
-                  <div key={sub.id} className="mb-6">
+                  <div key={sub.id} className="mb-6 print:break-inside-avoid">
                     <h3 className="text-base font-semibold text-gray-800 mb-2">
                       {sub.icon} {sub.name}
                     </h3>
