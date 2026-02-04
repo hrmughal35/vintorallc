@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ChevronDown, ChevronRight, Printer } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 import { productHierarchy, getMainCategories, getSubcategories, getProducts } from '../data/products'
 import ProductModal from '../components/products/ProductModal'
@@ -221,12 +222,14 @@ const Products = () => {
                       className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
                     >
                       {/* Main Category Header */}
-                      <motion.button
-                        onClick={() => toggleCategory(category.id)}
+                      <motion.div
                         whileHover={{ backgroundColor: 'rgba(79, 70, 229, 0.05)' }}
                         className="w-full px-6 py-5 flex items-center justify-between text-left group"
                       >
-                        <div className="flex items-center space-x-4">
+                        <button
+                          onClick={() => toggleCategory(category.id)}
+                          className="flex items-center space-x-4 flex-1 min-w-0 text-left"
+                        >
                           <div className="text-4xl">{category.icon}</div>
                           <div>
                             <h2 className="text-2xl font-bold text-gray-900 group-hover:text-primary-700 transition-colors">
@@ -234,15 +237,32 @@ const Products = () => {
                             </h2>
                             <p className="text-sm text-gray-700 mt-1 font-medium">{category.description}</p>
                           </div>
-                        </div>
-                    <motion.div
-                      animate={{ rotate: isCategoryExpanded ? 90 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-gray-400 group-hover:text-primary-600"
-                    >
-                      <ChevronRight size={24} />
-                    </motion.div>
-                  </motion.button>
+                        </button>
+                        <Link
+                          to={`/catalogues/view?category=${encodeURIComponent(category.id)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 border border-primary-200 shrink-0"
+                        >
+                          <Printer size={18} />
+                          Print catalogue
+                        </Link>
+                        <motion.div
+                          animate={{ rotate: isCategoryExpanded ? 90 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="text-gray-400 group-hover:text-primary-600 shrink-0 ml-2"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => toggleCategory(category.id)}
+                            className="p-1"
+                            aria-label={isCategoryExpanded ? 'Collapse' : 'Expand'}
+                          >
+                            <ChevronRight size={24} />
+                          </button>
+                        </motion.div>
+                      </motion.div>
 
                   {/* Subcategories */}
                   <AnimatePresence>
