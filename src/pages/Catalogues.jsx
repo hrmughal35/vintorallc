@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FileText, Download, Printer } from 'lucide-react'
+import { getMainCategories } from '../data/products'
 
 const Catalogues = () => {
+  const categories = getMainCategories()
+
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
       <section className="relative py-20 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 text-white overflow-hidden">
@@ -36,14 +39,14 @@ const Catalogues = () => {
                 </div>
                 <h2 className="text-xl font-bold text-gray-900 mb-2">Full Product Catalogue</h2>
                 <p className="text-gray-600 mb-6">
-                  View our complete product range online. You can print it or save as PDF for offline use.
+                  View our complete product range online. Open the page then use &quot;Print / Save as PDF&quot; or Ctrl+P.
                 </p>
                 <Link
                   to="/catalogues/view"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
                 >
                   <Printer size={18} />
-                  View &amp; Print Catalogue
+                  View &amp; Print Full Catalogue
                 </Link>
               </div>
             </motion.div>
@@ -59,28 +62,54 @@ const Catalogues = () => {
                 <div className="w-14 h-14 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center mb-6">
                   <Download size={28} />
                 </div>
-                <h2 className="text-xl font-bold text-gray-900 mb-2">PDF Catalogue</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-2">Save as PDF</h2>
                 <p className="text-gray-600 mb-6">
-                  Download a PDF version of our catalogue when available. Contact us for a custom catalogue.
+                  Open the full catalogue, then use your browser: <strong>Print</strong> → choose <strong>Save as PDF</strong> (or Microsoft Print to PDF).
                 </p>
-                <a
-                  href="/catalogues/view"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    window.open('/catalogues/view', '_blank', 'noopener')
-                    setTimeout(() => window.print(), 500)
-                  }}
+                <Link
+                  to="/catalogues/view"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-800 text-white rounded-lg font-medium hover:bg-gray-900 transition-colors"
                 >
                   <Download size={18} />
-                  Save as PDF
-                </a>
-                <p className="text-sm text-gray-500 mt-3">
-                  Opens catalogue in a new tab — use your browser’s &quot;Print&quot; → &quot;Save as PDF&quot;.
-                </p>
+                  Open Catalogue to Print / PDF
+                </Link>
               </div>
             </motion.div>
           </div>
+
+          {/* Print by category */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="mt-16 max-w-4xl mx-auto"
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Print by category</h2>
+            <p className="text-gray-600 mb-6">
+              View and print only the products in a specific category.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.map((cat, index) => (
+                <motion.div
+                  key={cat.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.05 * index }}
+                >
+                  <Link
+                    to={`/catalogues/view?category=${encodeURIComponent(cat.id)}`}
+                    className="block p-5 bg-white rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all text-left"
+                  >
+                    <span className="text-2xl mb-2 block">{cat.icon}</span>
+                    <h3 className="font-semibold text-gray-900">{cat.name}</h3>
+                    <p className="text-sm text-gray-600 mt-1">View &amp; print this category only</p>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>

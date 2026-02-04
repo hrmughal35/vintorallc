@@ -81,6 +81,8 @@ function App() {
           <ScrollToTop />
           <RedirectHandler />
           <Routes>
+            {/* Catalogue view: standalone (no header/footer) so print is clean */}
+            <Route path="/catalogues/view" element={<CatalogueView />} />
             {/* Public Routes */}
             <Route element={<PublicLayout />}>
               <Route path="/" element={<Home />} />
@@ -90,7 +92,6 @@ function App() {
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="/catalogues" element={<Catalogues />} />
-              <Route path="/catalogues/view" element={<CatalogueView />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
             </Route>

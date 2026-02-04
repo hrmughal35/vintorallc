@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Printer } from 'lucide-react'
 import { getMainCategories, getSubcategories, getProducts } from '../data/products'
 
@@ -28,7 +28,14 @@ const getProductSpecs = (product) => {
 
 const CatalogueView = () => {
   const printRef = useRef(null)
-  const mainCategories = getMainCategories()
+  const [searchParams] = useSearchParams()
+  const categoryId = searchParams.get('category') || null
+
+  const allCategories = getMainCategories()
+  const mainCategories = categoryId
+    ? allCategories.filter((c) => c.id === categoryId)
+    : allCategories
+  const singleCategory = mainCategories.length === 1 ? mainCategories[0] : null
 
   const handlePrint = () => {
     window.print()
@@ -36,25 +43,31 @@ const CatalogueView = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Screen-only: back + print bar */}
-      <div className="print:hidden sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between gap-4">
+      {/* Screen-only: back + print bar - no-print ensures it hides when printing */}
+      <div className="no-print print:hidden sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <Link to="/catalogues" className="text-primary-600 hover:text-primary-700 font-medium">
           ← Back to Catalogues
         </Link>
-        <button
-          onClick={handlePrint}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700"
-        >
-          <Printer size={18} />
-          Print / Save as PDF
-        </button>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-gray-500 hidden sm:inline">Use the button or Ctrl+P (Cmd+P on Mac)</span>
+          <button
+            type="button"
+            onClick={handlePrint}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700"
+          >
+            <Printer size={18} />
+            Print / Save as PDF
+          </button>
+        </div>
       </div>
 
       <div ref={printRef} className="max-w-4xl mx-auto px-4 sm:px-6 py-8 print:py-4">
         {/* Cover */}
         <div className="text-center mb-12 print:mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Vintora LLC</h1>
-          <p className="text-xl text-gray-600 mt-1">Product Catalogue</p>
+          <p className="text-xl text-gray-600 mt-1">
+            {singleCategory ? `${singleCategory.name} Catalogue` : 'Product Catalogue'}
+          </p>
           <p className="text-sm text-gray-500 mt-2">{new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
         </div>
 
