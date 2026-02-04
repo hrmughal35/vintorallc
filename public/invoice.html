@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice - Website Development</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1a1a1a;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px;
+      background: #fff;
+    }
+    @media print {
+      body { padding: 20px; }
+      .no-print { display: none !important; }
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #334e68;
+    }
+    .from h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #334e68;
+      margin-bottom: 6px;
+    }
+    .from p {
+      color: #555;
+      font-size: 13px;
+    }
+    .invoice-meta {
+      text-align: right;
+    }
+    .invoice-meta .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #888;
+      margin-bottom: 2px;
+    }
+    .invoice-meta .value {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .invoice-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #334e68;
+      margin-bottom: 8px;
+    }
+    .parties {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 36px;
+    }
+    .party {
+      flex: 1;
+    }
+    .party .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .party .name {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .party p {
+      color: #444;
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+    thead th {
+      text-align: left;
+      padding: 12px 14px;
+      background: #334e68;
+      color: #fff;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    thead th:last-child { text-align: right; }
+    tbody td {
+      padding: 14px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody td:last-child { text-align: right; font-weight: 600; }
+    .total-row td {
+      padding: 16px 14px;
+      font-size: 16px;
+      font-weight: 700;
+      background: #f0f4f8;
+      color: #334e68;
+    }
+    .total-row td:last-child { font-size: 18px; }
+    .notes {
+      margin-top: 32px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #555;
+    }
+    .notes h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #334e68;
+      margin-bottom: 8px;
+    }
+    .payment-details {
+      margin-top: 24px;
+      padding: 16px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .payment-details h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #334e68;
+      margin-bottom: 10px;
+    }
+    .payment-details p { margin-bottom: 4px; }
+    .footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e5e5;
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+    }
+    .btn-print {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 10px 20px;
+      background: #334e68;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-print:hover { background: #2a3f54; }
+  </style>
+</head>
+<body>
+  <div class="no-print" style="text-align: center;">
+    <button class="btn-print" onclick="window.print()">Save as PDF / Print</button>
+  </div>
+
+  <div class="header">
+    <div class="from">
+      <h1>Hassan Raza</h1>
+      <p style="font-size: 12px; color: #666;">Software Engineer</p>
+      <!-- <p>Address line 1</p> -->
+      <p>Pakistan</p>
+      <p>Email: hrmughal75@email.com | Phone: +92 323 0701210</p>
+    </div>
+    <div class="invoice-meta">
+      <div class="invoice-title">INVOICE</div>
+      <p class="label">Invoice No.</p>
+      <p class="value">INV-2026-001</p>
+      <p class="label" style="margin-top: 12px;">Date</p>
+      <p class="value" id="invoice-date">31 January 2025</p>
+    </div>
+  </div>
+
+  <div class="parties">
+    <div class="party">
+      <div class="label">From</div>
+      <div class="name">Hassan Raza</div>
+      <p>Software Engineer</p>
+      <!-- <p>Address line 1</p> -->
+      <p>Pakistan</p>
+    </div>
+    <div class="party">
+      <div class="label">Bill To</div>
+      <div class="name">Vintora LLC</div>
+      <!-- <p>Client address line 1</p> -->
+      <p>Pakistan / China</p>
+      <p>vintorallc@gmail.com</p>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th>Amount (PKR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>
+          <strong>Frontend Development</strong><br>
+          <span style="font-size: 12px; color: #666;">React/Vite app: all public pages (Home, About, Products, Blog, Contact), product catalog, blog, responsive layout, Tailwind CSS, animations.</span>
+        </td>
+        <td>63,000</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>
+          <strong>Backend Development</strong><br>
+          <span style="font-size: 12px; color: #666;">Python backend (API/server), admin authentication, data handling, and integration with frontend.</span>
+        </td>
+        <td>35,000</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>
+          <strong>Deployment & Hosting Setup</strong><br>
+          <span style="font-size: 12px; color: #666;">Vercel deployment, environment config, build setup, and go-live support.</span>
+        </td>
+        <td>21,000</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>
+          <strong>UI/UX Design & Integration</strong><br>
+          <span style="font-size: 12px; color: #666;">Visual design, component styling, admin panel UI, and design consistency across the site.</span>
+        </td>
+        <td>20,000</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>
+          <strong>Testing, Documentation & Handover</strong><br>
+          <span style="font-size: 12px; color: #666;">QA, bug fixes, basic documentation, and handover of source code and access.</span>
+        </td>
+        <td>11,000</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding: 14px; text-align: right; font-weight: 600;">Subtotal</td>
+        <td>150,000</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding: 12px 14px; color: #0d9488; font-weight: 600;">Discount (friend discount)</td>
+        <td style="color: #0d9488;">− 20,000</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="2">Total</td>
+        <td>PKR 130,000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="payment-details">
+    <h3>Payment Details</h3>
+    <p><strong>Bank Name:</strong> Dubai Islamic Bank </p>
+    <p><strong>Account Title:</strong> Hassan Raza </p>
+    <p><strong>Account Number:</strong> 1058312001 </p>
+    <p><strong>IBAN:</strong> PK26DUBAIC000001058312001</p>
+    <p><strong>Branch:</strong> DHA BLOCK PHASE-1 BRANCH LAHORE</p>
+  </div>
+
+  <div class="notes">
+    <h3>Note</h3>
+    <p>Whenever it’s convenient — no rush. Just drop the amount when you can and mention the invoice number so I can match it. Cheers!</p>
+    <p style="margin-top: 10px;"><strong>Source code</strong> will be handed over once payment is received.</p>
+  </div>
+
+  <div class="footer">
+    <p>Thanks — let me know if you need anything else.</p>
+  </div>
+  <script>
+    document.getElementById('invoice-date').textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  </script>
+</body>
+</html>

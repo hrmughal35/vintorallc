@@ -13,12 +13,15 @@ import Blog from './pages/Blog'
 import BlogPost from './pages/BlogPost'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
+import Catalogues from './pages/Catalogues'
+import CatalogueView from './pages/CatalogueView'
 import Login from './pages/admin/Login'
 import Dashboard from './pages/admin/Dashboard'
 import Categories from './pages/admin/Categories'
 import CategoryForm from './pages/admin/CategoryForm'
 import SubcategoryForm from './pages/admin/SubcategoryForm'
 import AdminProducts from './pages/admin/Products'
+import AdminCatalogues from './pages/admin/Catalogues'
 import AdminBlog from './pages/admin/Blog'
 import ProductForm from './pages/admin/ProductForm'
 import BlogForm from './pages/admin/BlogForm'
@@ -86,6 +89,8 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/catalogues" element={<Catalogues />} />
+              <Route path="/catalogues/view" element={<CatalogueView />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
             </Route>
@@ -103,6 +108,7 @@ function App() {
                     <Route path="categories/:categoryId/subcategories/new" element={<SubcategoryForm />} />
                     <Route path="categories/:categoryId/subcategories/edit/:subcategoryId" element={<SubcategoryForm />} />
                     <Route path="products" element={<AdminProducts />} />
+                    <Route path="catalogues" element={<AdminCatalogues />} />
                     <Route path="products/new" element={<ProductForm />} />
                     <Route path="products/edit/:categoryId/:subcategoryId/:productId" element={<ProductForm />} />
                     <Route path="blog" element={<AdminBlog />} />

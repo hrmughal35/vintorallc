@@ -17,3 +17,9 @@
     text-wrap: balance;
   }
 }
+
+@media print {
+  body {
+    background: #fff;
+  }
+}
