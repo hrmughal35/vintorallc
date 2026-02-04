@@ -22,6 +22,7 @@ import CategoryForm from './pages/admin/CategoryForm'
 import SubcategoryForm from './pages/admin/SubcategoryForm'
 import AdminProducts from './pages/admin/Products'
 import AdminCatalogues from './pages/admin/Catalogues'
+import AdminTheme from './pages/admin/Theme'
 import AdminBlog from './pages/admin/Blog'
 import ProductForm from './pages/admin/ProductForm'
 import BlogForm from './pages/admin/BlogForm'
@@ -110,6 +111,7 @@ function App() {
                     <Route path="categories/:categoryId/subcategories/edit/:subcategoryId" element={<SubcategoryForm />} />
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="catalogues" element={<AdminCatalogues />} />
+                    <Route path="theme" element={<AdminTheme />} />
                     <Route path="products/new" element={<ProductForm />} />
                     <Route path="products/edit/:categoryId/:subcategoryId/:productId" element={<ProductForm />} />
                     <Route path="blog" element={<AdminBlog />} />

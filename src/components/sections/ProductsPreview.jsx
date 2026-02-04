@@ -2,14 +2,18 @@ import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { getMainCategories } from '../../data/products'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const ProductsPreview = () => {
+  const { theme } = useTheme()
   const featuredCategories = getMainCategories().slice(0, 6)
   const navigate = useNavigate()
 
   const handleCardClick = (categoryId) => {
     navigate(`/products#${categoryId}`)
   }
+
+  if (theme === 'warm') return <ProductsPreviewWarm categories={featuredCategories} onCardClick={handleCardClick} />
 
   return (
     <section className="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
@@ -97,6 +101,45 @@ const ProductsPreview = () => {
           >
             View All Products
             <ArrowRight className="ml-2" size={22} />
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+function ProductsPreviewWarm({ categories, onCardClick }) {
+  return (
+    <section className="py-20 bg-[#fef7ed] relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-4">Our <span className="text-amber-700">Products</span></h2>
+          <p className="text-lg text-stone-600 max-w-2xl mx-auto">High-quality disposable products for your business</p>
+        </motion.div>
+        {/* Warm: horizontal scroll row of pills/cards */}
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide justify-center flex-wrap">
+          {categories.map((category, index) => (
+            <motion.button
+              key={category.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+              whileHover={{ scale: 1.03 }}
+              onClick={() => onCardClick(category.id)}
+              className="flex items-center gap-4 shrink-0 px-6 py-4 rounded-2xl bg-white border-2 border-amber-200/80 hover:border-amber-400 hover:shadow-xl transition-all text-left min-w-[280px]"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-2xl">{category.icon || '📦'}</div>
+              <div>
+                <h3 className="font-bold text-stone-900">{category.name}</h3>
+                <p className="text-sm text-stone-600 line-clamp-1">{category.description || 'Explore'}</p>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-10">
+          <Link to="/products" className="inline-flex items-center px-8 py-4 bg-amber-600 text-white font-bold rounded-2xl hover:bg-amber-700 transition-all shadow-lg hover:shadow-xl">
+            View All Products <ArrowRight className="ml-2" size={20} />
           </Link>
         </motion.div>
       </div>

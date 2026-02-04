@@ -3,20 +3,26 @@ import { Mail, MessageCircle, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Logo from './Logo'
 import FooterBackground from './FooterBackground'
+import { useTheme } from '../contexts/ThemeContext'
+
+const footerLinksList = [
+  { path: '/', label: 'Home' },
+  { path: '/about', label: 'About Us' },
+  { path: '/products', label: 'Products' },
+  { path: '/catalogues', label: 'Catalogues' },
+  { path: '/blog', label: 'Blog' },
+  { path: '/contact', label: 'Contact' },
+]
 
 const Footer = () => {
+  const { theme } = useTheme()
   const currentYear = new Date().getFullYear()
 
-  const footerLinks = {
-    company: [
-      { path: '/', label: 'Home' },
-      { path: '/about', label: 'About Us' },
-      { path: '/products', label: 'Products' },
-      { path: '/catalogues', label: 'Catalogues' },
-      { path: '/blog', label: 'Blog' },
-      { path: '/contact', label: 'Contact' },
-    ],
+  if (theme === 'warm') {
+    return <FooterWarm currentYear={currentYear} />
   }
+
+  const footerLinks = { company: footerLinksList }
 
   return (
     <footer className="relative bg-gradient-to-b from-gray-800 via-gray-900 to-gray-950 text-gray-300 overflow-hidden">
@@ -296,6 +302,49 @@ const Footer = () => {
             </p>
           </motion.div>
         </motion.div>
+      </div>
+    </footer>
+  )
+}
+
+function FooterWarm({ currentYear }) {
+  return (
+    <footer className="relative bg-gradient-to-b from-amber-900 via-amber-950 to-stone-950 text-amber-100/90 overflow-hidden py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto text-center">
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-10">
+          <Logo size="default" animated={false} textColor="white" />
+        </motion.div>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="text-amber-200/90 text-sm md:text-base leading-relaxed mb-8">
+          Professional supplier of high-quality disposable products. Serving 30+ countries with excellence and reliability.
+        </motion.p>
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {footerLinksList.map((link) => (
+            <Link key={link.path} to={link.path} className="px-4 py-2 rounded-full text-sm font-semibold text-amber-100 hover:bg-amber-800/50 hover:text-white transition-colors">
+              {link.label}
+            </Link>
+          ))}
+        </div>
+        <div className="flex flex-wrap justify-center gap-6 text-sm mb-10">
+          <a href="mailto:info@vintora.com" className="flex items-center gap-2 text-amber-200 hover:text-amber-100 transition-colors">
+            <Mail size={18} /> gmail
+          </a>
+          <a href="https://wa.me/8619012985053" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-amber-200 hover:text-amber-100 transition-colors">
+            <MessageCircle size={18} /> WhatsApp / WeChat
+          </a>
+          <span className="flex items-center gap-2 text-amber-200">
+            <Globe size={18} /> www.vintorallc.com
+          </span>
+        </div>
+        <div className="pt-8 border-t border-amber-800/50">
+          <p className="text-xs text-amber-300/80 mb-4">© {currentYear} Vintora LLC. All rights reserved.</p>
+          <div className="flex justify-center gap-6 text-xs">
+            <Link to="/privacy-policy" className="text-amber-300/80 hover:text-amber-200 transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="text-amber-300/80 hover:text-amber-200 transition-colors">Terms of Service</Link>
+          </div>
+          <p className="mt-6 text-xs text-amber-400/60">
+            Developed by <a href="https://www.linkedin.com/in/welcometohassanraza/" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 transition-colors font-semibold">Hassan Raza</a>
+          </p>
+        </div>
       </div>
     </footer>
   )

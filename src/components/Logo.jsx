@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useTheme } from '../contexts/ThemeContext'
 
 const Logo = ({ className = '', animated = true, size = 'default', textColor = 'default', useImage = false, imagePath = '/logo.png' }) => {
+  const { theme } = useTheme()
+  const useDefaultThemeColors = theme === 'warm' && textColor === 'default'
+
   const sizeClasses = {
     small: 'text-xl',
     default: 'text-2xl',
@@ -33,7 +37,9 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
     },
   }
 
-  const colors = textColorClasses[textColor] || textColorClasses.default
+  const colors = useDefaultThemeColors
+    ? { main: 'text-gray-900', primary: 'text-[#334e68]', secondary: 'text-[#627d98]' }
+    : (textColorClasses[textColor] || textColorClasses.default)
   const iconSize = iconSizes[size] || iconSizes.default
   const imageSize = imageSizes[size] || imageSizes.default
 
@@ -41,7 +47,8 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
     // If using image logo
     if (useImage) {
       return (
-        <div className={`flex items-center space-x-2 ${className}`}>
+        <div className={`flex items-center gap-3 ${className}`}>
+          <span className="flex-shrink-0">
           <motion.img
             src={imagePath}
             alt="Vintora LLC Logo"
@@ -55,7 +62,8 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
               ease: "easeInOut"
             }}
           />
-          {/* Optional: Keep text with image logo - Single Line */}
+          </span>
+          {/* Company name to the right of the logo */}
           <div className="flex items-baseline" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
             <motion.span
               className={`font-bold ${colors.main} flex items-baseline`}
@@ -77,12 +85,12 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
       )
     }
 
-    // Default SVG logo
+    // Default SVG logo: icon first (in front), then company name
     return (
-      <div className={`flex items-center space-x-2 ${className}`}>
-        {/* Animated Icon/Logo */}
+      <div className={`flex items-center gap-3 ${className}`}>
+        {/* Logo icon - in front of (to the left of) company name */}
         <motion.div
-          className="relative"
+          className="relative flex-shrink-0"
           animate={animated ? {
             rotate: [0, 5, -5, 0],
           } : {}}
@@ -183,7 +191,7 @@ const Logo = ({ className = '', animated = true, size = 'default', textColor = '
           </svg>
         </motion.div>
 
-      {/* Text - Alegreya Sans Font - Single Line */}
+      {/* Company name - to the right of the logo */}
       <div className="flex items-baseline" style={{ fontFamily: "'Alegreya Sans', sans-serif" }}>
         <motion.span
           className={`font-bold ${colors.main} flex items-baseline`}

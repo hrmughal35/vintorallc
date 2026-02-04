@@ -3,14 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ChevronDown, ChevronRight, Printer } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
-import { productHierarchy, getMainCategories, getSubcategories, getProducts } from '../data/products'
+import { getMainCategories, getSubcategories, getProducts } from '../data/products'
 import ProductModal from '../components/products/ProductModal'
+import { useTheme } from '../contexts/ThemeContext'
 
 const Products = () => {
+  const { theme } = useTheme()
   const [expandedCategories, setExpandedCategories] = useState({})
   const [expandedSubcategories, setExpandedSubcategories] = useState({})
   const [selectedProduct, setSelectedProduct] = useState(null)
   const location = useLocation()
+  const mainCategories = getMainCategories()
+
+  if (theme === 'warm') {
+    return <ProductsWarm mainCategories={mainCategories} location={location} expandedCategories={expandedCategories} setExpandedCategories={setExpandedCategories} expandedSubcategories={expandedSubcategories} setExpandedSubcategories={setExpandedSubcategories} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
+  }
 
   // Handle hash navigation from home page cards
   useEffect(() => {
@@ -46,8 +53,6 @@ const Products = () => {
       [key]: !prev[key]
     }))
   }
-
-  const mainCategories = getMainCategories()
 
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
@@ -394,6 +399,143 @@ const Products = () => {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
         />
+      )}
+    </div>
+  )
+}
+
+function ProductsWarm({
+  mainCategories,
+  location,
+  expandedCategories,
+  setExpandedCategories,
+  expandedSubcategories,
+  setExpandedSubcategories,
+  selectedProduct,
+  setSelectedProduct,
+}) {
+  const [activeCategoryId, setActiveCategoryId] = useState(mainCategories[0]?.id ?? null)
+
+  useEffect(() => {
+    if (location.hash) {
+      const categoryId = location.hash.substring(1)
+      if (categoryId && mainCategories.some((c) => c.id === categoryId)) {
+        setActiveCategoryId(categoryId)
+      }
+    }
+  }, [location.hash, mainCategories])
+
+  const activeCategory = mainCategories.find((c) => c.id === activeCategoryId) ?? mainCategories[0]
+  const subcategories = activeCategory ? getSubcategories(activeCategory.id) : []
+
+  return (
+    <div className="pt-20 min-h-screen bg-[var(--theme-bg)] font-sans flex flex-col">
+      {/* Minimal hero - no pills */}
+      <section className="py-10 bg-gradient-to-r from-primary-700 to-primary-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl md:text-4xl font-bold">Our Products</h1>
+          <p className="mt-1 text-white/90">High-quality disposables, organized by category.</p>
+        </div>
+      </section>
+
+      {/* Sidebar + content layout - no accordion */}
+      <section className="flex-1 flex flex-col md:flex-row">
+        {/* Left: vertical category nav (no icons in list, no pills) */}
+        <aside className="md:w-56 shrink-0 border-b md:border-b-0 md:border-r border-primary-200/50 bg-white/80">
+          <nav className="p-3 space-y-0.5 sticky top-20">
+            {mainCategories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategoryId(cat.id)}
+                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  activeCategoryId === cat.id
+                    ? 'bg-primary-100 text-primary-800'
+                    : 'text-gray-700 hover:bg-primary-50 hover:text-primary-700'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </nav>
+        </aside>
+
+        {/* Right: one category at a time - subcategories as headings, product grid (all visible, no expand) */}
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0">
+          {activeCategory && (
+            <motion.div
+              key={activeCategory.id}
+              initial={{ opacity: 0, x: 12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.25 }}
+              className="max-w-4xl"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">{activeCategory.icon}</span>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900">{activeCategory.name}</h2>
+                    <p className="text-sm text-gray-600">{activeCategory.description}</p>
+                  </div>
+                </div>
+                <Link
+                  to={`/catalogues/view?category=${encodeURIComponent(activeCategory.id)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-primary-700 bg-primary-100 hover:bg-primary-200 transition-colors"
+                >
+                  <Printer size={16} /> Print catalogue
+                </Link>
+              </div>
+
+              {subcategories.map((sub) => {
+                const products = getProducts(activeCategory.id, sub.id)
+                return (
+                  <div key={sub.id} className="mb-10">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                      <span className="text-xl">{sub.icon}</span>
+                      {sub.name}
+                      <span className="text-sm font-normal text-gray-500">({products.length})</span>
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {products.map((product) => (
+                        <motion.button
+                          key={product.id}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() =>
+                            setSelectedProduct({
+                              mainCategory: activeCategory,
+                              subcategory: sub,
+                              product,
+                            })
+                          }
+                          className="p-4 rounded-2xl border border-primary-200/60 bg-white hover:border-primary-300 hover:shadow-md text-left transition-all"
+                        >
+                          <div className="flex justify-between items-start gap-2 mb-2">
+                            <span className="text-xs font-bold text-primary-600 bg-primary-50 px-2 py-0.5 rounded">
+                              {product.id}
+                            </span>
+                            <span className="text-primary-600 text-xs font-medium">View</span>
+                          </div>
+                          <div className="font-semibold text-gray-900">{product.name || product.id}</div>
+                          <div className="mt-1 text-sm text-gray-600">
+                            {product.size && <span>Size: {product.size}</span>}
+                            {product.volume && <span> · {product.volume}</span>}
+                            {product.type && <span> · {product.type}</span>}
+                          </div>
+                        </motion.button>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+            </motion.div>
+          )}
+        </main>
+      </section>
+
+      {selectedProduct && (
+        <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       )}
     </div>
   )

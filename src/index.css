@@ -2,10 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========== Theme: Vintora (default) ========== */
+[data-theme="vintora"],
+:root {
+  --theme-primary-50: #f0f4f8;
+  --theme-primary-100: #d9e2ec;
+  --theme-primary-200: #bcccdc;
+  --theme-primary-300: #9fb3c8;
+  --theme-primary-400: #829ab1;
+  --theme-primary-500: #627d98;
+  --theme-primary-600: #486581;
+  --theme-primary-700: #334e68;
+  --theme-primary-800: #243b53;
+  --theme-primary-900: #102a43;
+  --theme-font-sans: 'Inter', system-ui, sans-serif;
+  --theme-bg: #ffffff;
+  --theme-hero-orb: radial-gradient(circle, rgba(51, 78, 104, 0.1) 0%, transparent 70%);
+  --theme-hero-orb-2: radial-gradient(circle, rgba(72, 101, 129, 0.08) 0%, transparent 70%);
+  --theme-hero-shape: linear-gradient(135deg, #334e68 0%, #486581 100%);
+}
+
+/* ========== Theme: Warm ========== */
+[data-theme="warm"] {
+  --theme-primary-50: #fffbeb;
+  --theme-primary-100: #fef3c7;
+  --theme-primary-200: #fde68a;
+  --theme-primary-300: #fcd34d;
+  --theme-primary-400: #fbbf24;
+  --theme-primary-500: #f59e0b;
+  --theme-primary-600: #d97706;
+  --theme-primary-700: #b45309;
+  --theme-primary-800: #92400e;
+  --theme-primary-900: #78350f;
+  --theme-font-sans: 'Nunito', 'Inter', system-ui, sans-serif;
+  --theme-bg: #fefdfb;
+  --theme-hero-orb: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+  --theme-hero-orb-2: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 70%);
+  --theme-hero-shape: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  --theme-section-bg: #fef7ed;
+  --theme-card-radius: 1.5rem;
+  --theme-button-radius: 1rem;
+  --theme-shadow-soft: 0 4px 20px rgba(180, 83, 9, 0.08);
+  --theme-shadow-card: 0 10px 40px rgba(180, 83, 9, 0.1);
+}
+
+/* Warm theme: whole design change - rounded, soft, slower feel */
+[data-theme="warm"] {
+  --theme-transition-duration: 0.45s;
+}
+
+[data-theme="warm"] section {
+  transition: background-color var(--theme-transition-duration) ease;
+}
+
+[data-theme="warm"] .bg-gray-50,
+[data-theme="warm"] .bg-gradient-to-b.from-gray-50,
+[data-theme="warm"] .bg-gradient-to-br.from-gray-50,
+[data-theme="warm"] section.bg-gradient-to-b {
+  background: var(--theme-section-bg) !important;
+}
+
+[data-theme="warm"] .from-gray-50.via-white {
+  --tw-gradient-from: #fef7ed;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+[data-theme="warm"] .min-h-screen.bg-gray-50 {
+  background: linear-gradient(180deg, #fefdfb 0%, #fef7ed 50%, #fefdfb 100%) !important;
+}
+
+[data-theme="warm"] .bg-white {
+  box-shadow: var(--theme-shadow-soft);
+}
+
+[data-theme="warm"] header nav a,
+[data-theme="warm"] header nav .rounded-lg {
+  border-radius: 9999px !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+[data-theme="warm"] footer {
+  background: linear-gradient(180deg, #78350f 0%, #92400e 30%, #451a03 100%) !important;
+}
+
+[data-theme="warm"] .rounded-xl {
+  border-radius: var(--theme-card-radius) !important;
+}
+
+[data-theme="warm"] .rounded-2xl {
+  border-radius: 1.75rem !important;
+}
+
+[data-theme="warm"] .rounded-lg {
+  border-radius: var(--theme-button-radius) !important;
+}
+
+[data-theme="warm"] .shadow-lg,
+[data-theme="warm"] .shadow-xl {
+  box-shadow: var(--theme-shadow-card) !important;
+}
+
+[data-theme="warm"] button,
+[data-theme="warm"] a.inline-flex {
+  transition-duration: 0.4s !important;
+}
+
+[data-theme="warm"] .motion-div,
+[data-theme="warm"] [class*="motion"] {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
 @layer base {
   body {
-    @apply bg-white text-gray-900 antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    @apply text-gray-900 antialiased;
+    background-color: var(--theme-bg);
+    font-family: var(--theme-font-sans);
   }
   html {
     scroll-behavior: smooth;
@@ -15,6 +127,15 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .theme-hero-orb {
+    background: var(--theme-hero-orb);
+  }
+  .theme-hero-orb-2 {
+    background: var(--theme-hero-orb-2);
+  }
+  .theme-hero-shape {
+    background: var(--theme-hero-shape);
   }
 }
 

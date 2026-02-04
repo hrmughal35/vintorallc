@@ -1,7 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Globe, Users, Clock, Award, Target, UsersRound } from 'lucide-react'
+import { useTheme } from '../contexts/ThemeContext'
 
 const About = () => {
+  const { theme } = useTheme()
+  if (theme === 'warm') return <AboutWarm />
+
   const values = [
     {
       icon: Award,
@@ -441,6 +445,150 @@ const About = () => {
           <svg className="w-full h-16 text-gray-50" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,80 Q300,40 600,80 T1200,80 L1200,120 L0,120 Z" fill="currentColor" />
           </svg>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+const aboutValues = [
+  { icon: Award, title: 'Quality Excellence', description: 'Strict QC & traceable code system ensuring high-quality products' },
+  { icon: UsersRound, title: 'Partnership', description: 'Building enduring partnerships based on trust and collaboration' },
+  { icon: Target, title: 'Sustainability', description: 'Committed to driving sustainable growth and environmental responsibility' },
+]
+const aboutStats = [
+  { number: '30+', label: 'Countries & Regions', icon: Globe },
+  { number: '20+', label: 'Professional Employees', icon: Users },
+  { number: '24h', label: 'One-to-One Reception', icon: Clock },
+]
+
+function AboutWarm() {
+  return (
+    <div className="pt-20 min-h-screen bg-[var(--theme-bg)] font-sans">
+      {/* Hero - simple strip */}
+      <section className="relative py-16 bg-gradient-to-r from-primary-700 to-primary-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-bold tracking-tight"
+          >
+            About Vintora
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.15 }}
+            className="mt-4 text-lg text-white/90 max-w-2xl"
+          >
+            Your trusted partner for high-quality disposable products, serving 30+ countries with excellence and reliability.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Stats - horizontal bar */}
+      <section className="border-b border-primary-200/50 bg-white/60">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {aboutStats.map((s, i) => {
+              const Icon = s.icon
+              return (
+                <motion.div
+                  key={s.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-[var(--theme-bg)] border border-primary-200/50"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <Icon className="text-primary-700" size={24} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-primary-800">{s.number}</div>
+                    <div className="text-sm text-gray-600">{s.label}</div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Story - single column */}
+      <section className="py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-2xl font-bold text-gray-900 mb-6"
+          >
+            Our Story
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-600 leading-relaxed"
+          >
+            Since our establishment, our commitment to quality and excellence has enabled us to build a strong global presence. Our products reach customers across Europe, Asia, Africa, the Americas, and Oceania.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Values - horizontal strips */}
+      <section className="py-12 border-t border-primary-200/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">Our Core Values</h2>
+          <div className="space-y-4">
+            {aboutValues.map((v, i) => {
+              const Icon = v.icon
+              return (
+                <motion.div
+                  key={v.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="flex flex-col sm:flex-row sm:items-center gap-4 p-6 rounded-2xl bg-white border border-primary-100 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center">
+                    <Icon className="text-primary-700" size={28} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-gray-900">{v.title}</h3>
+                    <p className="text-gray-600 mt-1">{v.description}</p>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Global Reach - compact */}
+      <section className="py-16 bg-primary-800 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold mb-6">Global Reach</h2>
+          <p className="text-primary-100 max-w-2xl mx-auto mb-8">
+            Our global reach reflects our dedication to quality, reliability, and international excellence.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {['France', 'Germany', 'Spain', 'Japan', 'UAE', 'Egypt', 'Mexico', 'Peru', 'Chile', 'Australia'].map((c, i) => (
+              <motion.span
+                key={c}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.02 * i }}
+                className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm font-medium"
+              >
+                {c}
+              </motion.span>
+            ))}
+          </div>
         </div>
       </section>
     </div>

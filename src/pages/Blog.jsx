@@ -3,8 +3,10 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Calendar, Clock, User, ArrowRight, Tag } from 'lucide-react'
 import { blogPosts, getCategories } from '../data/blog'
+import { useTheme } from '../contexts/ThemeContext'
 
 const Blog = () => {
+  const { theme } = useTheme()
   const [selectedCategory, setSelectedCategory] = useState('All')
   const categories = ['All', ...getCategories()]
 
@@ -13,6 +15,8 @@ const Blog = () => {
     : blogPosts.filter(post => post.category === selectedCategory)
 
   const featuredPosts = blogPosts.filter(post => post.featured).slice(0, 2)
+
+  if (theme === 'warm') return <BlogWarm />
 
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
@@ -187,6 +191,85 @@ const Blog = () => {
                       <ArrowRight size={16} className="text-primary-600 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
+                </Link>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function BlogWarm() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const categories = ['All', ...getCategories()]
+  const filteredPosts = selectedCategory === 'All' ? blogPosts : blogPosts.filter(post => post.category === selectedCategory)
+  const featuredPosts = blogPosts.filter(post => post.featured).slice(0, 2)
+
+  return (
+    <div className="pt-20 min-h-screen bg-[var(--theme-bg)] font-sans">
+      <section className="py-12 bg-gradient-to-r from-primary-700 to-primary-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold">Our Blog</motion.h1>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="mt-2 text-white/90">Insights and updates from Vintora LLC</motion.p>
+        </div>
+      </section>
+
+      {featuredPosts.length > 0 && (
+        <section className="py-10 border-b border-primary-200/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Featured</h2>
+            <div className="space-y-4">
+              {featuredPosts.map((post, i) => (
+                <motion.article key={post.id} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                  <Link to={`/blog/${post.id}`} className="flex flex-col sm:flex-row gap-4 p-5 rounded-2xl bg-white border border-primary-200/50 shadow-sm hover:shadow-md transition-shadow">
+                    <span className="text-4xl flex-shrink-0">{post.image}</span>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-xs text-gray-500">{new Date(post.date).toLocaleDateString('en-US')} · {post.readTime}</span>
+                      <span className="ml-2 px-2 py-0.5 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">{post.category}</span>
+                      <h3 className="text-lg font-bold text-gray-900 mt-2">{post.title}</h3>
+                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.excerpt}</p>
+                      <span className="inline-flex items-center gap-1 text-primary-600 font-medium text-sm mt-2">Read more <ArrowRight size={14} /></span>
+                    </div>
+                  </Link>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="py-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">All articles</h2>
+          <div className="flex flex-wrap gap-2 mb-8">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${selectedCategory === cat ? 'bg-primary-600 text-white' : 'bg-white border border-primary-200 text-gray-700 hover:bg-primary-50'}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="space-y-4">
+            {filteredPosts.map((post, i) => (
+              <motion.article key={post.id} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}>
+                <Link to={`/blog/${post.id}`} className="flex gap-4 p-4 rounded-2xl bg-white border border-primary-200/50 hover:shadow-md transition-shadow">
+                  <span className="text-3xl flex-shrink-0">{post.image}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <span>{new Date(post.date).toLocaleDateString('en-US')}</span>
+                      <span>{post.readTime}</span>
+                      {post.featured && <span className="px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded">Featured</span>}
+                    </div>
+                    <h3 className="font-bold text-gray-900 mt-1">{post.title}</h3>
+                    <p className="text-sm text-gray-600 mt-1 line-clamp-1">{post.excerpt}</p>
+                    <span className="inline-block mt-2 px-2 py-0.5 bg-primary-50 text-primary-700 text-xs font-medium rounded-full">{post.category}</span>
+                  </div>
+                  <ArrowRight className="text-primary-500 flex-shrink-0" size={20} />
                 </Link>
               </motion.article>
             ))}

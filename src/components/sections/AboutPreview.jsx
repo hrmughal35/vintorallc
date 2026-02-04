@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const AboutPreview = () => {
+  const { theme } = useTheme()
+  if (theme === 'warm') return <AboutPreviewWarm />
   return (
     <section className="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
@@ -88,6 +91,47 @@ const AboutPreview = () => {
               </div>
             </div>
           </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function AboutPreviewWarm() {
+  return (
+    <section className="py-24 bg-[#fef7ed] relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-5xl">
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-4xl md:text-5xl font-bold text-stone-900 mb-4 text-center">
+          About <span className="text-amber-700">Us</span>
+        </motion.h2>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-stone-600 mb-14 max-w-2xl mx-auto">
+          Dedicated to quality and global partnership
+        </motion.p>
+        {/* Warm: visual first (left), then text - and cards as horizontal strips */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+          <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-2 lg:order-1 rounded-[2rem] bg-gradient-to-br from-amber-600 to-amber-700 p-12 flex flex-col items-center justify-center min-h-[280px] shadow-2xl">
+            <span className="text-6xl md:text-7xl font-bold text-white">30+</span>
+            <span className="text-xl font-semibold text-amber-100 mt-2">Countries & Regions</span>
+          </motion.div>
+          <div className="order-1 lg:order-2 space-y-6">
+            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex gap-5 p-6 rounded-2xl bg-white border-2 border-amber-200/60 shadow-lg">
+              <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center shrink-0 text-2xl">🏢</div>
+              <div>
+                <h3 className="text-xl font-bold text-stone-900 mb-2">Welcome to Vintora</h3>
+                <p className="text-stone-600 text-sm leading-relaxed">We supply paper cups, plastic cups, paper plates, cutlery, thermal paper, and more—globally.</p>
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="flex gap-5 p-6 rounded-2xl bg-white border-2 border-amber-200/60 shadow-lg">
+              <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center shrink-0 text-2xl">🌐</div>
+              <div>
+                <h3 className="text-xl font-bold text-stone-900 mb-2">Our Vision</h3>
+                <p className="text-stone-600 text-sm leading-relaxed">Built on collaboration, trust, and global connection. We drive sustainable growth together.</p>
+              </div>
+            </motion.div>
+            <Link to="/about" className="inline-flex items-center mt-4 text-amber-700 font-bold hover:text-amber-800 text-lg group">
+              Learn More <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" size={20} />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

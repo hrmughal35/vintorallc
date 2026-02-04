@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, MessageCircle, Globe, CheckCircle, XCircle, Phone } from 'lucide-react'
 import { saveContactSubmission } from '../data/contacts'
 import CountryCodeSelector from '../components/CountryCodeSelector'
+import { useTheme } from '../contexts/ThemeContext'
 
 const Contact = () => {
+  const { theme } = useTheme()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -70,6 +72,20 @@ const Contact = () => {
       setIsSubmitting(false)
     }
   }
+
+  if (theme === 'warm') {
+    return (
+      <ContactWarm
+        formData={formData}
+        setFormData={setFormData}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        submitStatus={submitStatus}
+      />
+    )
+  }
+
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -449,6 +465,126 @@ const Contact = () => {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function ContactWarm({ formData, setFormData, handleInputChange, handleSubmit, isSubmitting, submitStatus }) {
+  return (
+    <div className="pt-20 min-h-screen bg-[var(--theme-bg)] font-sans">
+      <section className="py-12 bg-gradient-to-r from-primary-700 to-primary-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold">
+            Contact Us
+          </motion.h1>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="mt-2 text-white/90">
+            Get in touch for inquiries, partnerships, or support
+          </motion.p>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Contact cards - horizontal strip first */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+            <motion.a
+              href="mailto:info@vintora.com"
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-primary-200/50 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+                <Mail className="text-primary-700" size={24} />
+              </div>
+              <div>
+                <div className="font-bold text-gray-900">Email</div>
+                <div className="text-sm text-gray-600">gmail</div>
+              </div>
+            </motion.a>
+            <motion.a
+              href="https://wa.me/8619012985053"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.05 }}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-primary-200/50 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                <MessageCircle className="text-green-700" size={24} />
+              </div>
+              <div>
+                <div className="font-bold text-gray-900">WhatsApp / WeChat</div>
+                <div className="text-sm text-gray-600">+8619012985053</div>
+              </div>
+            </motion.a>
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-primary-200/50 shadow-sm"
+            >
+              <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+                <Globe className="text-primary-700" size={24} />
+              </div>
+              <div>
+                <div className="font-bold text-gray-900">Website</div>
+                <div className="text-sm text-gray-600">www.vintorallc.com</div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Form - card */}
+          <div className="max-w-2xl">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Send a message</h2>
+            <div className="bg-white rounded-2xl border border-primary-200/50 shadow-sm p-6 md:p-8">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3">
+                    <CheckCircle className="text-green-600" size={22} />
+                    <p className="text-green-800 font-medium text-sm">Thank you! Your message has been sent. We'll get back to you soon.</p>
+                  </div>
+                )}
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3">
+                    <XCircle className="text-red-600" size={22} />
+                    <p className="text-red-800 font-medium text-sm">Please fill in all required fields.</p>
+                  </div>
+                )}
+                <div>
+                  <label htmlFor="warm-name" className="block text-sm font-semibold text-gray-700 mb-1">Name *</label>
+                  <input type="text" id="warm-name" name="name" value={formData.name} onChange={handleInputChange} required className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white" placeholder="Your name" />
+                </div>
+                <div>
+                  <label htmlFor="warm-email" className="block text-sm font-semibold text-gray-700 mb-1">Email *</label>
+                  <input type="email" id="warm-email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white" placeholder="your.email@example.com" />
+                </div>
+                <div>
+                  <label htmlFor="warm-phone" className="block text-sm font-semibold text-gray-700 mb-1">Phone</label>
+                  <div className="flex gap-2">
+                    <CountryCodeSelector value={formData.countryCode} onChange={(code) => setFormData(prev => ({ ...prev, countryCode: code }))} className="w-40" />
+                    <input type="tel" id="warm-phone" name="phone" value={formData.phone} onChange={handleInputChange} className="flex-1 px-4 py-3 border border-primary-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white" placeholder="Phone number" />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="warm-subject" className="block text-sm font-semibold text-gray-700 mb-1">Subject *</label>
+                  <input type="text" id="warm-subject" name="subject" value={formData.subject} onChange={handleInputChange} required className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white" placeholder="Subject" />
+                </div>
+                <div>
+                  <label htmlFor="warm-message" className="block text-sm font-semibold text-gray-700 mb-1">Message *</label>
+                  <textarea id="warm-message" name="message" rows="5" value={formData.message} onChange={handleInputChange} required className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white resize-none" placeholder="Your message..." />
+                </div>
+                <button type="submit" disabled={isSubmitting} className="w-full py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors disabled:opacity-50">
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>

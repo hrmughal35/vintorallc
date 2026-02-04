@@ -12,7 +12,8 @@ import {
   FolderTree,
   Mail,
   Shield,
-  BookOpen
+  BookOpen,
+  Palette
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import Logo from '../Logo'
@@ -35,6 +36,7 @@ const AdminLayout = ({ children }) => {
     { path: '/admin/catalogues', label: 'Catalogues', icon: BookOpen },
     { path: '/admin/blog', label: 'Blog', icon: FileText },
     { path: '/admin/contacts', label: 'Contacts', icon: Mail },
+    { path: '/admin/theme', label: 'Theme', icon: Palette },
     { path: '/admin/legal', label: 'Legal Pages', icon: Shield },
   ]
 

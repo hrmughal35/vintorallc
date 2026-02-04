@@ -2,9 +2,13 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FileText, Download, Printer } from 'lucide-react'
 import { getMainCategories } from '../data/products'
+import { useTheme } from '../contexts/ThemeContext'
 
 const Catalogues = () => {
+  const { theme } = useTheme()
   const categories = getMainCategories()
+
+  if (theme === 'warm') return <CataloguesWarm categories={categories} />
 
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
@@ -110,6 +114,63 @@ const Catalogues = () => {
               ))}
             </div>
           </motion.div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function CataloguesWarm({ categories }) {
+  return (
+    <div className="pt-20 min-h-screen bg-[var(--theme-bg)] font-sans">
+      <section className="py-12 bg-gradient-to-r from-primary-700 to-primary-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold">Product Catalogues</motion.h1>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="mt-2 text-white/90">
+            Browse or download our product catalogues for a complete overview.
+          </motion.p>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-6 sm:grid-cols-2 max-w-3xl mb-12">
+            <div className="p-6 rounded-2xl bg-white border border-primary-200/50 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+                <FileText className="text-primary-700" size={24} />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 mb-2">Full Product Catalogue</h2>
+              <p className="text-sm text-gray-600 mb-4">View online, then use Print / Save as PDF (Ctrl+P).</p>
+              <Link to="/catalogues/view" className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-xl font-medium hover:bg-primary-700 transition-colors text-sm">
+                <Printer size={16} /> View &amp; Print
+              </Link>
+            </div>
+            <div className="p-6 rounded-2xl bg-white border border-primary-200/50 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+                <Download className="text-primary-700" size={24} />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 mb-2">Save as PDF</h2>
+              <p className="text-sm text-gray-600 mb-4">Open catalogue → Print → Save as PDF.</p>
+              <Link to="/catalogues/view" className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-700 text-white rounded-xl font-medium hover:bg-gray-800 transition-colors text-sm">
+                <Download size={16} /> Open to Print / PDF
+              </Link>
+            </div>
+          </div>
+
+          <h2 className="text-lg font-bold text-gray-900 mb-4">Print by category</h2>
+          <div className="flex flex-wrap gap-3">
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                to={`/catalogues/view?category=${encodeURIComponent(cat.id)}`}
+                className="px-5 py-3 rounded-2xl bg-white border border-primary-200/50 shadow-sm hover:shadow-md transition-shadow text-left"
+              >
+                <span className="text-xl block mb-1">{cat.icon}</span>
+                <span className="font-semibold text-gray-900">{cat.name}</span>
+                <span className="block text-xs text-gray-500 mt-0.5">View &amp; print this category</span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </div>

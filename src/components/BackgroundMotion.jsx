@@ -32,49 +32,6 @@ const BackgroundMotion = ({ variant = 'default' }) => {
     { size: 160, duration: 22, delay: 2, x: '40%', y: '80%', color: 'accent', id: 'orb-3' },
   ]
 
-  if (variant === 'minimal') {
-    return (
-      <AnimatePresence>
-        {mounted && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="fixed inset-0 pointer-events-none overflow-hidden -z-10"
-          >
-            {circles.slice(0, 2).map((circle, index) => (
-              <motion.div
-                key={circle.id}
-                initial={{ opacity: 0, scale: 0.5, y: 50 }}
-                animate={{
-                  opacity: [0.03, 0.05, 0.03],
-                  scale: [1, 1.1, 1],
-                  y: [0, -30, 0],
-                  x: [0, 20, 0],
-                }}
-                transition={{
-                  opacity: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
-                  scale: { duration: circle.duration, repeat: Infinity, ease: 'easeInOut', delay: circle.delay },
-                  y: { duration: circle.duration, repeat: Infinity, ease: 'easeInOut', delay: circle.delay },
-                  x: { duration: circle.duration, repeat: Infinity, ease: 'easeInOut', delay: circle.delay },
-                }}
-                className="absolute rounded-full"
-                style={{
-                  width: circle.size,
-                  height: circle.size,
-                  left: circle.x,
-                  top: circle.y,
-                  background: 'radial-gradient(circle, #334e68 0%, transparent 70%)',
-                }}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    )
-  }
-
   if (variant === 'particles') {
     return (
       <AnimatePresence>

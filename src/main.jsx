@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+import { ThemeProvider } from './contexts/ThemeContext'
 import './index.css'
 
 // Error boundary for better debugging
@@ -21,9 +22,11 @@ if (!rootElement) {
     console.log('main.jsx: Attempting to render app')
     root.render(
       <React.StrictMode>
-        <ErrorBoundary>
-          <App />
-        </ErrorBoundary>
+        <ThemeProvider>
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </ThemeProvider>
       </React.StrictMode>
     )
     console.log('main.jsx: App render command sent')

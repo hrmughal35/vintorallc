@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Package, FileText, Users, TrendingUp, ArrowRight, FolderTree, Mail, BookOpen } from 'lucide-react'
+import { Package, FileText, Users, TrendingUp, ArrowRight, FolderTree, Mail, BookOpen, Palette } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { productHierarchy } from '../../data/products'
 import { blogPosts } from '../../data/blog'
@@ -130,6 +130,13 @@ const Dashboard = () => {
             >
               <BookOpen size={24} className="text-gray-400 group-hover:text-primary-600 transition-colors" />
               <span className="font-semibold text-gray-700 group-hover:text-primary-700">Catalogues</span>
+            </Link>
+            <Link
+              to="/admin/theme"
+              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all duration-200 flex items-center justify-center gap-3 group"
+            >
+              <Palette size={24} className="text-gray-400 group-hover:text-primary-600 transition-colors" />
+              <span className="font-semibold text-gray-700 group-hover:text-primary-700">Theme</span>
             </Link>
           </div>
         </motion.div>

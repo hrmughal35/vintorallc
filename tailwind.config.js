@@ -9,16 +9,16 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f4f8',
-          100: '#d9e2ec',
-          200: '#bcccdc',
-          300: '#9fb3c8',
-          400: '#829ab1',
-          500: '#627d98',
-          600: '#486581',
-          700: '#334e68',
-          800: '#243b53',
-          900: '#102a43',
+          50: 'var(--theme-primary-50)',
+          100: 'var(--theme-primary-100)',
+          200: 'var(--theme-primary-200)',
+          300: 'var(--theme-primary-300)',
+          400: 'var(--theme-primary-400)',
+          500: 'var(--theme-primary-500)',
+          600: 'var(--theme-primary-600)',
+          700: 'var(--theme-primary-700)',
+          800: 'var(--theme-primary-800)',
+          900: 'var(--theme-primary-900)',
         },
         accent: {
           grey: '#6b7280',
@@ -26,7 +26,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: 'var(--theme-font-sans), system-ui, sans-serif',
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out',
