@@ -18,6 +18,9 @@ const Footer = () => {
   const { theme } = useTheme()
   const currentYear = new Date().getFullYear()
 
+  if (theme === 'simple') {
+    return <FooterSimple currentYear={currentYear} />
+  }
   if (theme === 'warm') {
     return <FooterWarm currentYear={currentYear} />
   }
@@ -302,6 +305,40 @@ const Footer = () => {
             </p>
           </motion.div>
         </motion.div>
+      </div>
+    </footer>
+  )
+}
+
+function FooterSimple({ currentYear }) {
+  return (
+    <footer className="bg-gray-800 text-gray-300 py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+        <div className="mb-8">
+          <Logo size="small" animated={false} textColor="white" />
+        </div>
+        <p className="text-sm text-gray-400 mb-6">
+          Professional supplier of high-quality disposable products. Serving 30+ countries.
+        </p>
+        <div className="flex flex-wrap gap-4 mb-6">
+          {footerLinksList.map((link) => (
+            <Link key={link.path} to={link.path} className="text-sm text-gray-400">
+              {link.label}
+            </Link>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-8">
+          <a href="mailto:info@vintora.com">Email</a>
+          <a href="https://wa.me/8619012985053" target="_blank" rel="noopener noreferrer">WhatsApp / WeChat</a>
+          <span>www.vintorallc.com</span>
+        </div>
+        <div className="pt-6 border-t border-gray-700">
+          <p className="text-xs text-gray-500">© {currentYear} Vintora LLC. All rights reserved.</p>
+          <div className="flex gap-4 mt-2 text-xs text-gray-500">
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms-of-service">Terms of Service</Link>
+          </div>
+        </div>
       </div>
     </footer>
   )

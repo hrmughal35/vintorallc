@@ -5,6 +5,7 @@ import { useTheme } from '../../contexts/ThemeContext'
 
 const AboutPreview = () => {
   const { theme } = useTheme()
+  if (theme === 'simple') return <AboutPreviewSimple />
   if (theme === 'warm') return <AboutPreviewWarm />
   return (
     <section className="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
@@ -91,6 +92,26 @@ const AboutPreview = () => {
               </div>
             </div>
           </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function AboutPreviewSimple() {
+  return (
+    <section className="py-12 border-t border-gray-200 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">About Us</h2>
+        <p className="text-gray-600 mb-6 max-w-2xl">
+          We are dedicated to supplying high-quality disposable products. Our product line includes paper cups, plastic cups, paper plates, cutlery, thermal paper, and more.
+        </p>
+        <div className="flex flex-wrap gap-4 items-center">
+          <div className="p-4 border border-gray-200">
+            <span className="text-2xl font-bold text-gray-900">30+</span>
+            <span className="block text-sm text-gray-600">Countries & Regions</span>
+          </div>
+          <Link to="/about" className="text-sm font-medium text-gray-900 underline">Learn more</Link>
         </div>
       </div>
     </section>

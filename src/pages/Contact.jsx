@@ -85,6 +85,18 @@ const Contact = () => {
       />
     )
   }
+  if (theme === 'simple') {
+    return (
+      <ContactSimple
+        formData={formData}
+        setFormData={setFormData}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        submitStatus={submitStatus}
+      />
+    )
+  }
 
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
@@ -465,6 +477,87 @@ const Contact = () => {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function ContactSimple({ formData, setFormData, handleInputChange, handleSubmit, isSubmitting, submitStatus }) {
+  return (
+    <div className="pt-14 min-h-screen bg-white">
+      <section className="py-8 border-b border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold text-gray-900">Contact Us</h1>
+          <p className="mt-2 text-gray-600">Get in touch for inquiries, partnerships, or support.</p>
+        </div>
+      </section>
+      <section className="py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <a href="mailto:info@vintora.com" className="flex items-center gap-3 p-4 border border-gray-200">
+              <Mail className="text-gray-600" size={22} />
+              <div>
+                <div className="font-medium text-gray-900">Email</div>
+                <div className="text-sm text-gray-600">gmail</div>
+              </div>
+            </a>
+            <a href="https://wa.me/8619012985053" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 border border-gray-200">
+              <MessageCircle className="text-gray-600" size={22} />
+              <div>
+                <div className="font-medium text-gray-900">WhatsApp / WeChat</div>
+                <div className="text-sm text-gray-600">+8619012985053</div>
+              </div>
+            </a>
+            <div className="flex items-center gap-3 p-4 border border-gray-200">
+              <Globe className="text-gray-600" size={22} />
+              <div>
+                <div className="font-medium text-gray-900">Website</div>
+                <div className="text-sm text-gray-600">www.vintorallc.com</div>
+              </div>
+            </div>
+          </div>
+          <h2 className="text-lg font-bold text-gray-900 mb-4">Send a message</h2>
+          <div className="max-w-xl border border-gray-200 p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {submitStatus === 'success' && (
+                <div className="p-3 bg-green-50 border border-green-200 flex items-center gap-2 text-sm text-green-800">
+                  <CheckCircle size={18} /> Thank you. Your message has been sent.
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className="p-3 bg-red-50 border border-red-200 flex items-center gap-2 text-sm text-red-800">
+                  <XCircle size={18} /> Please fill in all required fields.
+                </div>
+              )}
+              <div>
+                <label htmlFor="simple-name" className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                <input type="text" id="simple-name" name="name" value={formData.name} onChange={handleInputChange} required className="w-full px-3 py-2 border border-gray-300" />
+              </div>
+              <div>
+                <label htmlFor="simple-email" className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                <input type="email" id="simple-email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-3 py-2 border border-gray-300" />
+              </div>
+              <div>
+                <label htmlFor="simple-phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <div className="flex gap-2">
+                  <CountryCodeSelector value={formData.countryCode} onChange={(code) => setFormData(prev => ({ ...prev, countryCode: code }))} className="w-36" />
+                  <input type="tel" id="simple-phone" name="phone" value={formData.phone} onChange={handleInputChange} className="flex-1 px-3 py-2 border border-gray-300" />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="simple-subject" className="block text-sm font-medium text-gray-700 mb-1">Subject *</label>
+                <input type="text" id="simple-subject" name="subject" value={formData.subject} onChange={handleInputChange} required className="w-full px-3 py-2 border border-gray-300" />
+              </div>
+              <div>
+                <label htmlFor="simple-message" className="block text-sm font-medium text-gray-700 mb-1">Message *</label>
+                <textarea id="simple-message" name="message" rows="4" value={formData.message} onChange={handleInputChange} required className="w-full px-3 py-2 border border-gray-300" />
+              </div>
+              <button type="submit" disabled={isSubmitting} className="px-4 py-2 bg-gray-800 text-white text-sm font-medium disabled:opacity-50">
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </button>
+            </form>
           </div>
         </div>
       </section>

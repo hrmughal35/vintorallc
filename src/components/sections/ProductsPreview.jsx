@@ -13,6 +13,7 @@ const ProductsPreview = () => {
     navigate(`/products#${categoryId}`)
   }
 
+  if (theme === 'simple') return <ProductsPreviewSimple categories={featuredCategories} onCardClick={handleCardClick} />
   if (theme === 'warm') return <ProductsPreviewWarm categories={featuredCategories} onCardClick={handleCardClick} />
 
   return (
@@ -103,6 +104,31 @@ const ProductsPreview = () => {
             <ArrowRight className="ml-2" size={22} />
           </Link>
         </motion.div>
+      </div>
+    </section>
+  )
+}
+
+function ProductsPreviewSimple({ categories, onCardClick }) {
+  return (
+    <section className="py-12 border-t border-gray-200 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Products</h2>
+        <p className="text-gray-600 mb-6 text-sm">High-quality disposable products by category.</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              type="button"
+              onClick={() => onCardClick(category.id)}
+              className="p-4 border border-gray-200 text-left"
+            >
+              <span className="text-xl block mb-2">{category.icon || '📦'}</span>
+              <span className="text-sm font-medium text-gray-900">{category.name}</span>
+            </button>
+          ))}
+        </div>
+        <Link to="/products" className="inline-block mt-6 text-sm font-medium text-gray-900 underline">View all products</Link>
       </div>
     </section>
   )

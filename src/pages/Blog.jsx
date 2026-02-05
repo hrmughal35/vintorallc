@@ -16,6 +16,7 @@ const Blog = () => {
 
   const featuredPosts = blogPosts.filter(post => post.featured).slice(0, 2)
 
+  if (theme === 'simple') return <BlogSimple />
   if (theme === 'warm') return <BlogWarm />
 
   return (
@@ -193,6 +194,75 @@ const Blog = () => {
                   </div>
                 </Link>
               </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function BlogSimple() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const categories = ['All', ...getCategories()]
+  const filteredPosts = selectedCategory === 'All' ? blogPosts : blogPosts.filter(post => post.category === selectedCategory)
+  const featuredPosts = blogPosts.filter(post => post.featured).slice(0, 2)
+
+  return (
+    <div className="pt-14 min-h-screen bg-white">
+      <section className="py-8 border-b border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-bold text-gray-900">Our Blog</h1>
+          <p className="mt-1 text-gray-600 text-sm">Insights and updates from Vintora LLC</p>
+        </div>
+      </section>
+      {featuredPosts.length > 0 && (
+        <section className="py-6 border-b border-gray-200">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Featured</h2>
+            <div className="space-y-3">
+              {featuredPosts.map((post) => (
+                <Link key={post.id} to={`/blog/${post.id}`} className="flex gap-4 p-4 border border-gray-200">
+                  <span className="text-2xl">{post.image}</span>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-xs text-gray-500">{new Date(post.date).toLocaleDateString('en-US')} · {post.readTime}</span>
+                    <span className="ml-2 text-xs text-gray-500">{post.category}</span>
+                    <h3 className="font-bold text-gray-900 mt-1">{post.title}</h3>
+                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.excerpt}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      <section className="py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">All articles</h2>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-3 py-1.5 text-sm font-medium ${selectedCategory === cat ? 'bg-gray-800 text-white' : 'border border-gray-300 text-gray-700'}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="space-y-2">
+            {filteredPosts.map((post) => (
+              <Link key={post.id} to={`/blog/${post.id}`} className="flex gap-4 p-3 border border-gray-200">
+                <span className="text-xl">{post.image}</span>
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs text-gray-500">{new Date(post.date).toLocaleDateString('en-US')} · {post.readTime}</span>
+                  {post.featured && <span className="ml-2 text-xs text-gray-500">Featured</span>}
+                  <h3 className="font-medium text-gray-900 mt-0.5">{post.title}</h3>
+                  <p className="text-xs text-gray-600 line-clamp-1">{post.excerpt}</p>
+                  <span className="text-xs text-gray-500">{post.category}</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

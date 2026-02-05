@@ -113,6 +113,39 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+/* ========== Theme: Simple (no animations, minimal UI) ========== */
+[data-theme="simple"] {
+  --theme-primary-50: #f9fafb;
+  --theme-primary-100: #f3f4f6;
+  --theme-primary-200: #e5e7eb;
+  --theme-primary-300: #d1d5db;
+  --theme-primary-400: #9ca3af;
+  --theme-primary-500: #6b7280;
+  --theme-primary-600: #4b5563;
+  --theme-primary-700: #374151;
+  --theme-primary-800: #1f2937;
+  --theme-primary-900: #111827;
+  --theme-font-sans: 'Inter', system-ui, sans-serif;
+  --theme-bg: #ffffff;
+  --theme-hero-orb: none;
+  --theme-hero-orb-2: none;
+  --theme-hero-shape: #374151;
+}
+
+/* Simple theme: no motion, no transitions */
+[data-theme="simple"] *,
+[data-theme="simple"] *::before,
+[data-theme="simple"] *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+[data-theme="simple"] html {
+  scroll-behavior: auto;
+}
+
 @layer base {
   body {
     @apply text-gray-900 antialiased;

@@ -15,6 +15,9 @@ const Products = () => {
   const location = useLocation()
   const mainCategories = getMainCategories()
 
+  if (theme === 'simple') {
+    return <ProductsSimple mainCategories={mainCategories} location={location} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
+  }
   if (theme === 'warm') {
     return <ProductsWarm mainCategories={mainCategories} location={location} expandedCategories={expandedCategories} setExpandedCategories={setExpandedCategories} expandedSubcategories={expandedSubcategories} setExpandedSubcategories={setExpandedSubcategories} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
   }
@@ -400,6 +403,80 @@ const Products = () => {
           onClose={() => setSelectedProduct(null)}
         />
       )}
+    </div>
+  )
+}
+
+function ProductsSimple({ mainCategories, location, selectedProduct, setSelectedProduct }) {
+  const [activeCategoryId, setActiveCategoryId] = useState(mainCategories[0]?.id ?? null)
+  useEffect(() => {
+    if (location?.hash) {
+      const id = location.hash.substring(1)
+      if (mainCategories.some((c) => c.id === id)) setActiveCategoryId(id)
+    }
+  }, [location?.hash, mainCategories])
+  const activeCategory = mainCategories.find((c) => c.id === activeCategoryId) ?? mainCategories[0]
+  const subcategories = activeCategory ? getSubcategories(activeCategory.id) : []
+
+  return (
+    <div className="pt-14 min-h-screen bg-white flex flex-col">
+      <section className="py-8 border-b border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-bold text-gray-900">Our Products</h1>
+          <p className="mt-1 text-gray-600 text-sm">High-quality disposables by category.</p>
+        </div>
+      </section>
+      <section className="flex-1 flex flex-col md:flex-row">
+        <aside className="md:w-48 shrink-0 border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50">
+          <nav className="p-3">
+            {mainCategories.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setActiveCategoryId(cat.id)}
+                className={`w-full text-left px-3 py-2 text-sm font-medium ${activeCategoryId === cat.id ? 'bg-gray-200 text-gray-900' : 'text-gray-600'}`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </nav>
+        </aside>
+        <main className="flex-1 p-4 sm:p-6 min-w-0">
+          {activeCategory && (
+            <div className="max-w-4xl">
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-gray-900">{activeCategory.name}</h2>
+                <p className="text-sm text-gray-600 mt-1">{activeCategory.description}</p>
+                <a href={`/catalogues/view?category=${encodeURIComponent(activeCategory.id)}`} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-gray-600 underline">Print catalogue</a>
+              </div>
+              {subcategories.map((sub) => {
+                const products = getProducts(activeCategory.id, sub.id)
+                return (
+                  <div key={sub.id} className="mb-8">
+                    <h3 className="text-base font-semibold text-gray-900 mb-3">{sub.name}</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                      {products.map((product) => (
+                        <button
+                          key={product.id}
+                          type="button"
+                          onClick={() => setSelectedProduct({ mainCategory: activeCategory, subcategory: sub, product })}
+                          className="p-3 border border-gray-200 text-left"
+                        >
+                          <div className="text-xs font-medium text-gray-500">{product.id}</div>
+                          <div className="font-medium text-gray-900">{product.name || product.id}</div>
+                          {product.size && <div className="text-xs text-gray-600">Size: {product.size}</div>}
+                          {product.volume && <div className="text-xs text-gray-600">{product.volume}</div>}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </main>
+      </section>
+      {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
     </div>
   )
 }

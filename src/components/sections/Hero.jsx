@@ -9,10 +9,10 @@ const warmTransition = { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
 const Hero = () => {
   const { theme } = useTheme()
   const isWarm = theme === 'warm'
+  const isSimple = theme === 'simple'
 
-  if (isWarm) {
-    return <HeroWarm />
-  }
+  if (isSimple) return <HeroSimple />
+  if (isWarm) return <HeroWarm />
   return <HeroDefault />
 }
 
@@ -237,6 +237,34 @@ function HeroWarm() {
         <svg className="w-full h-32 md:h-40 text-white" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path d="M0,80 Q200,20 400,60 T800,50 T1200,70 L1200,120 L0,120 Z" fill="currentColor" className="text-amber-100" />
         </svg>
+      </div>
+    </section>
+  )
+}
+
+function HeroSimple() {
+  return (
+    <section className="pt-14 pb-16 bg-white border-b border-gray-200">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            VINTORA <span className="text-primary-600">LLC</span>
+          </h1>
+          <p className="text-lg text-gray-600 mb-4">
+            Professional Supplier of High-Quality Disposable Products
+          </p>
+          <p className="text-gray-600 mb-8">
+            Serving 30+ countries with excellence, reliability, and commitment to quality. Your trusted partner for paper cups, containers, cutlery, and more.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/products" className="inline-flex items-center px-6 py-3 bg-primary-700 text-white text-sm font-medium">
+              Explore Products <ArrowRight className="ml-2" size={18} />
+            </Link>
+            <Link to="/about" className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium">
+              Learn More
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   )

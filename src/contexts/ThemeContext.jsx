@@ -5,6 +5,7 @@ const STORAGE_KEY = 'vintora_site_theme'
 export const THEMES = [
   { id: 'vintora', name: 'Vintora (Default)', description: 'Blue-slate professional look' },
   { id: 'warm', name: 'Warm', description: 'Amber and cream, soft and rounded' },
+  { id: 'simple', name: 'Simple', description: 'Minimal, no animations—professional and basic' },
 ]
 
 const ThemeContext = createContext(null)

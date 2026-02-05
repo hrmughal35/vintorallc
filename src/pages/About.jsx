@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/ThemeContext'
 
 const About = () => {
   const { theme } = useTheme()
+  if (theme === 'simple') return <AboutSimple />
   if (theme === 'warm') return <AboutWarm />
 
   const values = [
@@ -461,6 +462,79 @@ const aboutStats = [
   { number: '20+', label: 'Professional Employees', icon: Users },
   { number: '24h', label: 'One-to-One Reception', icon: Clock },
 ]
+
+function AboutSimple() {
+  return (
+    <div className="pt-14 min-h-screen bg-white">
+      <section className="py-10 border-b border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold text-gray-900">About Vintora</h1>
+          <p className="mt-2 text-gray-600 max-w-2xl">Your trusted partner for high-quality disposable products, serving 30+ countries.</p>
+        </div>
+      </section>
+      <section className="py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {aboutStats.map((s) => {
+              const Icon = s.icon
+              return (
+                <div key={s.label} className="flex items-center gap-3 p-4 border border-gray-200">
+                  <div className="w-10 h-10 flex items-center justify-center bg-gray-100">
+                    <Icon className="text-gray-600" size={20} />
+                  </div>
+                  <div>
+                    <div className="text-xl font-bold text-gray-900">{s.number}</div>
+                    <div className="text-sm text-gray-600">{s.label}</div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+      <section className="py-8 border-t border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Our Story</h2>
+          <p className="text-gray-600 leading-relaxed">
+            Since our establishment, our commitment to quality and excellence has enabled us to build a strong global presence. Our products reach customers across Europe, Asia, Africa, the Americas, and Oceania.
+          </p>
+        </div>
+      </section>
+      <section className="py-8 border-t border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Our Core Values</h2>
+          <div className="space-y-3">
+            {aboutValues.map((v) => {
+              const Icon = v.icon
+              return (
+                <div key={v.title} className="flex gap-4 p-4 border border-gray-200">
+                  <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-gray-100">
+                    <Icon className="text-gray-600" size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900">{v.title}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{v.description}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+      <section className="py-8 bg-gray-100 border-t border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Global Reach</h2>
+          <p className="text-gray-600 mb-4">Our products reach customers in Europe, Asia, Africa, the Americas, and Oceania.</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {['France', 'Germany', 'Spain', 'Japan', 'UAE', 'Egypt', 'Mexico', 'Peru', 'Chile', 'Australia'].map((c) => (
+              <span key={c} className="px-3 py-1 bg-white border border-gray-200 text-sm text-gray-700">{c}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
 
 function AboutWarm() {
   return (
