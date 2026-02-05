@@ -3,18 +3,18 @@ import { createContext, useContext, useEffect, useState } from 'react'
 const STORAGE_KEY = 'vintora_site_theme'
 
 export const THEMES = [
-  { id: 'vintora', name: 'Vintora (Default)', description: 'Blue-slate professional look' },
+  { id: 'simple', name: 'Simple (Default)', description: 'Minimal, no animations—professional and basic' },
+  { id: 'vintora', name: 'Vintora', description: 'Blue-slate professional look' },
   { id: 'warm', name: 'Warm', description: 'Amber and cream, soft and rounded' },
-  { id: 'simple', name: 'Simple', description: 'Minimal, no animations—professional and basic' },
 ]
 
 const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() => {
-    if (typeof window === 'undefined') return 'vintora'
-    const saved = window.localStorage.getItem(STORAGE_KEY) || 'vintora'
-    return saved === 'minimal' ? 'vintora' : saved
+    if (typeof window === 'undefined') return 'simple'
+    const saved = window.localStorage.getItem(STORAGE_KEY) || 'simple'
+    return saved === 'minimal' ? 'simple' : saved
   })
 
   useEffect(() => {
